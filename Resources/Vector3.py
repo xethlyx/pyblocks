@@ -2,7 +2,7 @@ import math
 
 
 class Vector3:
-    def __init__(self, x, y, z):
+    def __init__(self, x=0, y=0, z=0):
         self.type = "Vector3"
 
         if isinstance(x, (float, int)) and\
@@ -46,7 +46,7 @@ class Vector3:
             (self.z * self.z)
         )
 
-    def distanceFrom(self, other):
+    def distance_from(self, other):
         if isinstance(other, Vector3):
             return (self - other).magnitude()
         else:
