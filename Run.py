@@ -31,8 +31,8 @@ while Run == CEnum.GameState.Active:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             Run = CEnum.GameState.Dead
-        elif event.type == pygame.KEYDOWN:
-            currentController.key_down(event)
+
+    currentController.key_down(pygame.key.get_pressed())
 
     # Get User Input
     (changedPosition, changedRotation) = currentController.getMovementSet()
