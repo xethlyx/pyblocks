@@ -38,7 +38,7 @@ while Run == CEnum.GameState.Active:
     (changedPosition, changedRotation) = currentController.getMovementSet()
 
     if changedRotation != blankRotation:
-        currentCamera.Rotation = currentCamera.Rotation + changedRotation
+        currentCamera.Rotation = currentCamera.Rotation * changedRotation
 
     if changedPosition != blankPosition:
         currentCamera.Position = currentCamera.Position + changedPosition
