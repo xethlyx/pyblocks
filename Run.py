@@ -21,12 +21,12 @@ pygame.display.set_caption("Pycraft")
 currentCamera = Camera(90, Vector3(), RMatrix())
 currentController = MovementController()
 
-LastRun = datetime.now()
+LastRun = datetime.datetime.now()
 Run = CEnum.GameState.Active
 
 while Run == CEnum.GameState.Active:
-    deltaTime = LastRun - datetime.now()
-    LastRun = datetime.now()
+    deltaTime = LastRun - datetime.datetime.now()
+    LastRun = datetime.datetime.now()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
