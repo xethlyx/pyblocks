@@ -9,3 +9,7 @@ class RMatrix():
 
     def __str__(self):
         return("x({}) y({}) z({})".format(self.x, self.y, self.z))
+
+    def __mult__(self, other):
+        # TODO: proper mult
+        return self
