@@ -12,4 +12,8 @@ class RMatrix():
 
     def __mul__(self, other):
         # TODO: proper mult
+        return RMatrix(
+            self.x.one * other.x.one + self.x.two * other.y.one + self.x.three + other.y.one, self.x.one * other.x.two + self.x.two * other.y.two + self.x.three * other.z.two
+        )
+
         return(self)
