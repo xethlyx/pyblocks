@@ -29,3 +29,12 @@ class MovementController():
             print("down")
         elif event[pygame.K_d]:
             print("right")
+
+    def on_move(self, x, y):
+        print("Mouse moved")
+
+    def on_click(self, x, y, button, pressed):
+        print("Mouse clicked")
+
+    def on_scroll(self, x, y, dx, dy):
+        print("Scrolled")

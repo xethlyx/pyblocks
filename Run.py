@@ -4,6 +4,7 @@ import pygame
 
 import Enum as CEnum
 
+from pynput.mouse import Listener
 from Render import Camera
 from MovementController import MovementController
 
@@ -33,6 +34,12 @@ while Run == CEnum.GameState.Active:
             Run = CEnum.GameState.Dead
 
     currentController.key_down(pygame.key.get_pressed())
+
+    with Listener(
+                  on_move=currentController.on_move,
+                  on_click=currentController.on_click,
+                  on_scroll=currentController.on_scroll) as listener:
+        listener.join()
 
     # Get User Input
     (changedPosition, changedRotation) = currentController.getMovementSet()
