@@ -1,6 +1,5 @@
-# flake8: noqa: E501
-
 from Resources.Matrix3 import Matrix3
+
 
 class RMatrix():
     def __init__(self, x1=0, x2=0, x3=0, y1=0, y2=0, y3=0, z1=0, z2=0, z3=0):
@@ -35,6 +34,7 @@ class RMatrix():
                                                                          self.z.two * other.y.three +
                                                                          self.z.three * other.z.three),
         )
+
 
 def identityRMatrix():
     return(RMatrix(
