@@ -53,5 +53,8 @@ while Run == CEnum.GameState.Active:
     # Draw the scene
     currentCamera.render3d()
 
+    # Debug Position + Rot
+    print("pos {} | rot {}".format(currentCamera.Position, currentCamera.Rotation))
+
     pygame.time.delay(50)
 pygame.quit()
