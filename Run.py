@@ -1,4 +1,5 @@
 import datetime
+import threading
 
 import pygame
 
@@ -25,7 +26,26 @@ currentController = MovementController()
 LastRun = datetime.datetime.now()
 Run = CEnum.GameState.Active
 
+# Move listener into another thread
+
+
+def joinListener():
+    with Listener(
+                  on_move=currentController.on_move,
+                  on_click=currentController.on_click,
+                  on_scroll=currentController.on_scroll
+                 ) as listener:
+        listener.join()
+
+
+mouseListenerThread = threading.Thread(target=joinListener, args=())
+mouseListenerThread.start()
+
+
 while Run == CEnum.GameState.Active:
+    # Debug Position + Rot
+    print("ttt")
+
     deltaTime = LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
 
@@ -34,12 +54,6 @@ while Run == CEnum.GameState.Active:
             Run = CEnum.GameState.Dead
 
     currentController.key_down(pygame.key.get_pressed())
-
-    with Listener(
-                  on_move=currentController.on_move,
-                  on_click=currentController.on_click,
-                  on_scroll=currentController.on_scroll) as listener:
-        listener.join()
 
     # Get User Input
     (changedPosition, changedRotation) = currentController.getMovementSet()
@@ -52,9 +66,6 @@ while Run == CEnum.GameState.Active:
 
     # Draw the scene
     currentCamera.render3d()
-
-    # Debug Position + Rot
-    print("pos {} | rot {}".format(currentCamera.Position, currentCamera.Rotation))
 
     pygame.time.delay(50)
 pygame.quit()
