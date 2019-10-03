@@ -21,15 +21,11 @@ class MovementController():
     def key_down(self, event):
         if event[pygame.K_SPACE]:
             print("space")
-
-        if event[pygame.K_w]:
+        elif event[pygame.K_w]:
             print("up")
-        
-        if event[pygame.K_a]:
+        elif event[pygame.K_a]:
             print("left")
-
-        if event[pygame.K_s]:
+        elif event[pygame.K_s]:
             print("down")
-        
-        if event[pygame.K_d]:
+        elif event[pygame.K_d]:
             print("right")
