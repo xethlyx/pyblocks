@@ -10,7 +10,7 @@ from Render import Camera
 from MovementController import MovementController
 
 from Resources.Vector3 import Vector3
-from Resources.RMatrix import RMatrix
+from Resources.RMatrix import RMatrix, identityRMatrix
 
 blankRotation = RMatrix()
 blankPosition = Vector3()
@@ -20,7 +20,7 @@ pygame.init()
 window = pygame.display.set_mode((500, 500))
 pygame.display.set_caption("Pycraft")
 
-currentCamera = Camera(90, Vector3(), RMatrix())
+currentCamera = Camera(90, Vector3(), identityRMatrix())
 currentController = MovementController()
 
 LastRun = datetime.datetime.now()
