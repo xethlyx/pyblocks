@@ -6,4 +6,4 @@ class Camera:
         self.Rotation = rmatrix
 
     def render3d(self):
-        print(self.Rotation)
+        pass
