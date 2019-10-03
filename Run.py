@@ -29,7 +29,6 @@ while Run == CEnum.GameState.Active:
     # Debug Position + Rot
     print(pygame.mouse.get_rel())
 
-
     deltaTime = LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
 
