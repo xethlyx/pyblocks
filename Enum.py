@@ -6,6 +6,12 @@ class GameState(Enum):
     Dead = 0
 
 
+class GameScene(Enum):
+    MainMenu = "MainMenu"
+    Render3D = "Render3D"
+    RenderPaused = "RenderPaused"
+
+
 class UserInputType(Enum):
     Keyboard = "Keyboard"
     Mouse = "Mouse"

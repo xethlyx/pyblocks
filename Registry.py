@@ -18,7 +18,10 @@ class Registry():
         generatedUuid = generateUuid()
 
         while generatedUuid.hex in self.entities:
-            print("generated uuid")
-            self.entities[generatedUuid] = generatedUuid
+            generatedUuid = generateUuid()
+            break
+
+        print("generated uuid " + generatedUuid.hex)
+        self.entities[generatedUuid.hex] = generatedUuid
 
         print("done!")

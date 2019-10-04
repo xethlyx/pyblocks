@@ -15,6 +15,7 @@ import Enum as CEnum
 # Management
 
 from Render import Camera
+from MainMenu import MainMenu
 from MovementController import MovementController
 from Registry import Registry
 
@@ -41,18 +42,18 @@ gameRegistry = Registry()
 
 currentCamera = Camera(90, Vector3(), identityRMatrix())
 currentController = MovementController()
+currentMainMenu = MainMenu(gameRegistry)
 
 LastRun = datetime.datetime.now()
 Run = CEnum.GameState.Active
+
+GameScene = CEnum.GameScene.MainMenu
 
 # Debug
 
 testEntity = DefaultEntity("test", gameRegistry)
 
 while Run == CEnum.GameState.Active:
-    # Debug Position + Rot
-    print(pygame.mouse.get_rel())
-
     deltaTime = LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
 
@@ -60,19 +61,22 @@ while Run == CEnum.GameState.Active:
         if event.type == pygame.QUIT:
             Run = CEnum.GameState.Dead
 
-    currentController.key_down(pygame.key.get_pressed())
+    if GameScene == CEnum.GameScene.MainMenu:
+        currentMainMenu.render()
+    elif GameScene == CEnum.GameScene.Render3D:
+        currentController.key_down(pygame.key.get_pressed())
 
-    # Get User Input
-    (changedPosition, changedRotation) = currentController.getMovementSet()
+        # Get User Input
+        (changedPosition, changedRotation) = currentController.getMovementSet()
 
-    if changedRotation != blankRotation:
-        currentCamera.Rotation = currentCamera.Rotation * changedRotation
+        if changedRotation != blankRotation:
+            currentCamera.Rotation = currentCamera.Rotation * changedRotation
 
-    if changedPosition != blankPosition:
-        currentCamera.Position = currentCamera.Position + changedPosition
+        if changedPosition != blankPosition:
+            currentCamera.Position = currentCamera.Position + changedPosition
 
-    # Draw the scene
-    currentCamera.render3d()
+        # Draw the scene
+        currentCamera.render3d()
 
-    pygame.time.delay(50)
+        pygame.time.delay(50)
 pygame.quit()
