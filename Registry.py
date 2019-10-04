@@ -10,7 +10,7 @@ class Registry():
         print("[REGISTRY] Attr {} has been changed to {}".format(attr, value))
         super(Registry, self).__setattr__(attr, value)
 
-    def registerEntity(self, entity):
+    def register_entity(self, entity):
         """Register an entity in the Registry
 
         Parameters:
@@ -19,13 +19,13 @@ class Registry():
         Returns:
         uuid: Generated UUID
         """
-        def generateUuid():
+        def generate_uuid():
             return uuid.uuid4()
 
-        generatedUuid = generateUuid()
+        generatedUuid = generate_uuid()
 
         while generatedUuid.hex in self.entities:
-            generatedUuid = generateUuid()
+            generatedUuid = generate_uuid()
             break
 
         self.entities[generatedUuid.hex] = generatedUuid
