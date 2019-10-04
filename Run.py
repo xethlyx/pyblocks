@@ -35,7 +35,7 @@ blankPosition = Vector3()
 
 pygame.init()
 
-window = pygame.display.set_mode((500, 500))
+window = pygame.display.set_mode((1520, 800))
 pygame.display.set_caption("Pycraft")
 
 gameRegistry = Registry()
