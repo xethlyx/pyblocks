@@ -3,15 +3,22 @@ import uuid
 
 
 class Registry():
-    entities = {}
-
-    # def __init__(self):
-    #     pass
+    def __init__(self):
+        self.entities = {}
 
     def __setattr__(self, attr, value):
         print("[REGISTRY] Attr {} has been changed to {}".format(attr, value))
+        super(Registry, self).__setattr__(attr, value)
 
     def registerEntity(self, entity):
+        """Register an entity in the Registry
+
+        Parameters:
+        entity (DefaultEntity): The default entity
+
+        Returns:
+        uuid: Generated UUID
+        """
         def generateUuid():
             return uuid.uuid4()
 
@@ -21,7 +28,4 @@ class Registry():
             generatedUuid = generateUuid()
             break
 
-        print("generated uuid " + generatedUuid.hex)
         self.entities[generatedUuid.hex] = generatedUuid
-
-        print("done!")

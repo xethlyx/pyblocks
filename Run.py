@@ -1,3 +1,5 @@
+"""The main class for the game"""
+
 # # # Imports # # #
 
 # System
@@ -19,10 +21,6 @@ from MainMenu import MainMenu
 from MovementController import MovementController
 from Registry import Registry
 
-# Entities
-
-from Entities.DefaultEntity import DefaultEntity
-
 # Data Types
 
 from Resources.Vector3 import Vector3
@@ -38,45 +36,47 @@ pygame.init()
 window = pygame.display.set_mode((1520, 800))
 pygame.display.set_caption("Pycraft")
 
+# Set up registry
+
 gameRegistry = Registry()
 
-currentCamera = Camera(90, Vector3(), identityRMatrix())
-currentController = MovementController()
-currentMainMenu = MainMenu(gameRegistry)
+gameRegistry.currentCamera = Camera(90, Vector3(), identityRMatrix())
+gameRegistry.currentController = MovementController()
+gameRegistry.currentMainMenu = MainMenu(gameRegistry)
 
-LastRun = datetime.datetime.now()
-Run = CEnum.GameState.Active
+gameRegistry.currentWindow = window
 
-GameScene = CEnum.GameScene.MainMenu
+gameRegistry.LastRun = datetime.datetime.now()
+gameRegistry.Run = CEnum.GameState.Active
 
-# Debug
+gameRegistry.GameScene = CEnum.GameScene.MainMenu
 
-testEntity = DefaultEntity("test", gameRegistry)
+# # # Main Loop # # #
 
-while Run == CEnum.GameState.Active:
-    deltaTime = LastRun - datetime.datetime.now()
+while gameRegistry.Run == CEnum.GameState.Active:
+    deltaTime = gameRegistry.LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             Run = CEnum.GameState.Dead
 
-    if GameScene == CEnum.GameScene.MainMenu:
-        currentMainMenu.render()
-    elif GameScene == CEnum.GameScene.Render3D:
-        currentController.key_down(pygame.key.get_pressed())
+    if gameRegistry.GameScene == CEnum.GameScene.MainMenu:
+        gameRegistry.currentMainMenu.render()
+    elif gameRegistry.GameScene == CEnum.GameScene.Render3D:
+        gameRegistry.currentController.key_down(pygame.key.get_pressed())
 
         # Get User Input
-        (changedPosition, changedRotation) = currentController.getMovementSet()
+        (changedPosition, changedRotation) = gameRegistry.currentController.getMovementSet()
 
         if changedRotation != blankRotation:
-            currentCamera.Rotation = currentCamera.Rotation * changedRotation
+            gameRegistry.currentCamera.Rotation = gameRegistry.currentCamera.Rotation * changedRotation
 
         if changedPosition != blankPosition:
-            currentCamera.Position = currentCamera.Position + changedPosition
+            gameRegistry.currentCamera.Position = gameRegistry.currentCamera.Position + changedPosition
 
         # Draw the scene
-        currentCamera.render3d()
+        gameRegistry.currentCamera.render3d()
 
         pygame.time.delay(50)
 pygame.quit()
