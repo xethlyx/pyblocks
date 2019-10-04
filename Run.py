@@ -47,7 +47,7 @@ Run = CEnum.GameState.Active
 
 # Debug
 
-testEntity = DefaultEntity("test")
+testEntity = DefaultEntity("test", gameRegistry)
 
 while Run == CEnum.GameState.Active:
     # Debug Position + Rot

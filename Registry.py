@@ -3,8 +3,10 @@ import uuid
 
 
 class Registry():
-    def __init__(self):
-        self.entities = {}
+    entities = {}
+
+    # def __init__(self):
+    #     pass
 
     def __setattr__(self, attr, value):
         print("[REGISTRY] Attr {} has been changed to {}".format(attr, value))
