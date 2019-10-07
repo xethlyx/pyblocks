@@ -55,6 +55,8 @@ class TMatrix:
                                                                        self.p.four * other.p.three),
         )
 
-        def __eq__(self, other):
-            print("running")
-            return(str(self) == str(other))
+    def __eq__(self, other):
+        if not isinstance(other, TMatrix):
+            return NotImplemented
+
+        return(str(self) == str(other))
