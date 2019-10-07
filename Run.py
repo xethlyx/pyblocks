@@ -50,7 +50,6 @@ gameRegistry.GameScene = CEnum.GameScene.MainMenu
 # # # Main Loop # # #
 
 while gameRegistry.Run == CEnum.GameState.Active:
-    print("Render")
     deltaTime = gameRegistry.LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
 
