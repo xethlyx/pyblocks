@@ -9,19 +9,16 @@ class MainMenu():
 
 
     def render(self):
-        
+
+        self.registry.currentWindow.fill((0, 0, 0))
         back = pygame.image.load('test.png')
-        self.registry.currentWindow.blit(back, (0, 0)) 
-
-        red = 255
-        blue = 0
-        green = 0
+        back = pygame.transform.scale(back, (1520, 800))
+        self.registry.currentWindow.blit(back, (0, 0))
         left = 50
-        top = 50
-        width = 90
-        height = 90
-
-        pygame.draw.rect(self.registry.currentWindow, [red, blue, green], [left, top, width, height])
+        top = 655
+        width = 360
+        height = 100
+        pygame.draw.rect(self.registry.currentWindow, [225, 112, 85], [left, top, width, height])
 
     def render_first(self):
         pass
