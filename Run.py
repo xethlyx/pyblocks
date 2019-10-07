@@ -23,13 +23,9 @@ from Registry import Registry
 
 # Data Types
 
-from Resources.Vector3 import Vector3
-from Resources.RMatrix import RMatrix, identityRMatrix
+from Resources.TMatrix import TMatrix
 
 # # # Main Code # # #
-
-blankRotation = RMatrix()
-blankPosition = Vector3()
 
 pygame.init()
 
@@ -40,7 +36,7 @@ pygame.display.set_caption("Pycraft")
 
 gameRegistry = Registry()
 
-gameRegistry.currentCamera = Camera(90, Vector3(), identityRMatrix())
+gameRegistry.currentCamera = Camera(90, TMatrix())
 gameRegistry.currentController = MovementController()
 gameRegistry.currentMainMenu = MainMenu(gameRegistry)
 
@@ -69,11 +65,12 @@ while gameRegistry.Run == CEnum.GameState.Active:
         # Get User Input
         (changedPosition, changedRotation) = gameRegistry.currentController.getMovementSet()
 
-        if changedRotation != blankRotation:
-            gameRegistry.currentCamera.Rotation = gameRegistry.currentCamera.Rotation * changedRotation
+        # TODO: Change TMatrix checking function and then compare both
+        # if changedRotation != blankRotation:
+        #     gameRegistry.currentCamera.Rotation = gameRegistry.currentCamera.Rotation * changedRotation
 
-        if changedPosition != blankPosition:
-            gameRegistry.currentCamera.Position = gameRegistry.currentCamera.Position + changedPosition
+        # if changedPosition != blankPosition:
+        #     gameRegistry.currentCamera.Position = gameRegistry.currentCamera.Position + changedPosition
 
         # Draw the scene
         gameRegistry.currentCamera.render3d()
