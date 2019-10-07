@@ -47,6 +47,10 @@ gameRegistry.Run = CEnum.GameState.Active
 
 gameRegistry.GameScene = CEnum.GameScene.MainMenu
 
+print(TMatrix(1) == TMatrix(1))
+
+print(TMatrix(1) == TMatrix())
+
 # # # Main Loop # # #
 
 while gameRegistry.Run == CEnum.GameState.Active:

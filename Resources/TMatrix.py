@@ -8,6 +8,9 @@ class TMatrix:
         self.z = Matrix4(z1, z2, 1, z3)
         self.p = Matrix4(xp, yp, zp, 1)
 
+    def __str__(self):
+        return("x({}) y({}) z({}) p({})".format(self.x, self.y, self.z, self.p))
+
     def __mul__(self, other):
         return TMatrix(
             (self.x.one * other.x.two +
@@ -51,3 +54,7 @@ class TMatrix:
                                                                        self.p.three * other.z.three +
                                                                        self.p.four * other.p.three),
         )
+
+        def __eq__(self, other):
+            print("running")
+            return(str(self) == str(other))
