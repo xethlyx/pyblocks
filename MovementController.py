@@ -1,22 +1,18 @@
 import pygame
 
 from Resources.TMatrix import TMatrix
-from Resources.FSize import FSize
 
 
 class MovementController():
     def __init__(self):
-        self.vector = Vector3()
-        self.rotation = RMatrix()
+        self.transform = TMatrix()
 
     def getMovementSet(self):
-        vector = self.vector
-        rotation = self.rotation
+        transform = self.transform
 
-        self.vector = Vector3()
-        self.rotation = RMatrix()
+        self.transform = TMatrix()
 
-        return(vector, rotation)
+        return(transform)
 
     def key_down(self, event):
         if event[pygame.K_SPACE]:
