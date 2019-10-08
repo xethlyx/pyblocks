@@ -56,7 +56,7 @@ while gameRegistry.Run == CEnum.GameState.Active:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             Run = CEnum.GameState.Dead
-
+            
     if gameRegistry.GameScene == CEnum.GameScene.MainMenu:
         gameRegistry.currentMainMenu.render()
     elif gameRegistry.GameScene == CEnum.GameScene.Render3D:
