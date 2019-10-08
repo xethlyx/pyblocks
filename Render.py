@@ -1,17 +1,41 @@
 """A .py file containing assets required for 3D rendering the scene"""
 
-
 from Resources.TMatrix import TMatrix
+from Resources.FSize import FSize
 
 
 class Camera:
-    def __init__(self, fov, transform):
+    def __init__(self, fov, transform, registry):
+        """Create a new camera.
+
+        Arguments:
+            fov (int) -- The field of view in degrees.
+            transform (TMatrix) -- The TMatrix including rotation and vector.
+            registry (Registry) -- The Registry to pull information from.
+
+        Raises:
+            Exception: Transform must be of type TMatrix.
+        """
         self.fov = fov
+        self.registry = registry
 
         if isinstance(transform, TMatrix):
             self.transform = transform
         else:
             raise Exception("Transform must be of type TMatrix!")
 
+    def tmatrix_to_position(self, transform):
+        """Transforms a TMatrix into screen coordinates.
+
+        Arguments:
+            transform (TMatrix) -- A TMatrix created using the TMatrix constructor.
+        """
+        width, height = self.registry.currentWindow.get_size()
+        biggestDim = max((width, height))
+
+        frameSize = FSize(biggestDim, biggestDim)
+
+        distance = (self.transform - transform).get_magnitude()
+
     def render3d(self):
-        pass
+        self.tmatrix_to_position(TMatrix())

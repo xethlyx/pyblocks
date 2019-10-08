@@ -1,3 +1,5 @@
+import math
+
 from Resources.Matrix4 import Matrix4
 
 
@@ -25,7 +27,7 @@ class TMatrix:
         self.p = Matrix4(xp, yp, zp, 1)
 
     def __str__(self):
-        return("x((}) y((}) z((}) p((})".format(self.x, self.y, self.z, self.p))
+        return("x({}) y({}) z({}) p({})".format(self.x, self.y, self.z, self.p))
 
     def __mul__(self, other):
         return TMatrix(
@@ -76,3 +78,33 @@ class TMatrix:
             return NotImplemented
 
         return(str(self) == str(other))
+
+    def __neg__(self):
+        return TMatrix(
+            -self.x.two, -self.x.three, -self.x.four,
+            -self.y.one, -self.y.three, -self.y.four,
+            -self.z.one, -self.z.two, -self.z.four,
+            -self.p.one, -self.p.two, -self.p.three
+        )
+
+    def __add__(self, other):
+        if not isinstance(other, TMatrix):
+            return NotImplemented
+
+        return TMatrix(
+            self.x.two, self.x.three, self.x.four,
+            self.y.one, self.y.three, self.y.four,
+            self.z.one, self.z.two, self.z.four,
+            self.p.one + other.p.one, self.p.two + other.p.two, self.p.three + other.p.three
+        )
+
+    def __sub__(self, other):
+        return self + (-other)
+
+    def get_magnitude(self):
+        """Gets the magnitude of the embedded vector.
+
+        Returns:
+            int -- The magnitude of the embedded vector.
+        """
+        return math.sqrt((self.p.one ** 2) + (self.p.two ** 2) + (self.p.three ** 2))
