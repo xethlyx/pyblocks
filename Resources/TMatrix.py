@@ -3,13 +3,29 @@ from Resources.Matrix4 import Matrix4
 
 class TMatrix:
     def __init__(self, x1=0, x2=0, x3=0, y1=0, y2=0, y3=0, z1=0, z2=0, z3=0, xp=0, yp=0, zp=0):
+        """Crete a new TMatrx with an automatically embedded identity matrix.
+
+        Keyword Arguments:
+            x1 (int) -- Rotation x: 1 (default: 0)
+            x2 (int) -- Rotation x: 2 (default: 0)
+            x3 (int) -- Rotation x: 3 (default: 0)
+            y1 (int) -- Rotation y: 1 (default: 0)
+            y2 (int) -- Rotation y: 2 (default: 0)
+            y3 (int) -- Rotation y: 3 (default: 0)
+            z1 (int) -- Rotation z: 1 (default: 0)
+            z2 (int) -- Rotation z: 2 (default: 0)
+            z3 (int) -- Rotation z: 3 (default: 0)
+            xp (int) -- Vector3 Position: x (default: 0)
+            yp (int) -- Vector3 Position: y (default: 0)
+            zp (int) -- Vector3 Position: z (default: 0)
+        """
         self.x = Matrix4(1, x1, x2, x3)
         self.y = Matrix4(y1, 1, y2, y3)
         self.z = Matrix4(z1, z2, 1, z3)
         self.p = Matrix4(xp, yp, zp, 1)
 
     def __str__(self):
-        return("x({}) y({}) z({}) p({})".format(self.x, self.y, self.z, self.p))
+        return("x((}) y((}) z((}) p((})".format(self.x, self.y, self.z, self.p))
 
     def __mul__(self, other):
         return TMatrix(
