@@ -36,7 +36,7 @@ pygame.display.set_caption("Pycraft")
 
 gameRegistry = Registry()
 
-gameRegistry.currentCamera = Camera(90, TMatrix())
+gameRegistry.currentCamera = Camera(90, TMatrix(), gameRegistry)
 gameRegistry.currentController = MovementController()
 gameRegistry.currentMainMenu = MainMenu(gameRegistry)
 
@@ -63,7 +63,7 @@ while gameRegistry.Run == CEnum.GameState.Active:
         gameRegistry.currentController.key_down(pygame.key.get_pressed())
 
         # Get User Input
-        (changedPosition, changedRotation) = gameRegistry.currentController.getMovementSet()
+        changedTransform = gameRegistry.currentController.getMovementSet()
 
         # TODO: Change TMatrix checking function and then compare both
         # if changedRotation != blankRotation:
