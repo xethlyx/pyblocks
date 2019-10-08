@@ -1,7 +1,7 @@
 import pygame
 
-from Resources.RMatrix import RMatrix
-from Resources.Vector3 import Vector3
+from Resources.TMatrix import TMatrix
+from Resources.FSize import FSize
 
 
 class MovementController():
