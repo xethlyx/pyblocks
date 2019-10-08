@@ -1,5 +1,5 @@
 # Manages all data going in and out
-import uuid
+import Util
 
 
 class Registry():
@@ -19,13 +19,8 @@ class Registry():
         Returns:
         uuid: Generated UUID
         """
-        def generate_uuid():
-            return uuid.uuid4()
+        generatedUuid = Util.generate_unique_uuid_retry(self.entities)
 
-        generatedUuid = generate_uuid()
-
-        while generatedUuid.hex in self.entities:
-            generatedUuid = generate_uuid()
-            break
+        print("[REGISTRY] Entity {} has been registered with UUID {}".format(entity, generatedUuid.hex))
 
         self.entities[generatedUuid.hex] = generatedUuid

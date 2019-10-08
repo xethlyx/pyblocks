@@ -47,10 +47,6 @@ gameRegistry.Run = CEnum.GameState.Active
 
 gameRegistry.GameScene = CEnum.GameScene.MainMenu
 
-print(TMatrix(1) == TMatrix(1))
-
-print(TMatrix(1) == TMatrix())
-
 # # # Main Loop # # #
 
 while gameRegistry.Run == CEnum.GameState.Active:
@@ -80,4 +76,5 @@ while gameRegistry.Run == CEnum.GameState.Active:
         gameRegistry.currentCamera.render3d()
 
         pygame.time.delay(50)
+    pygame.display.update()
 pygame.quit()

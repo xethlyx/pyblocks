@@ -6,7 +6,7 @@ class Matrix4():
         self.four = four
 
     def __str__(self):
-        return("Matrix4({}, {}, {}, {})".format(self.one, self.two, self.three))
+        return("Matrix4({}, {}, {}, {})".format(self.one, self.two, self.three, self.four))
 
     def __eq__(self, other):
         print(self + " " + (self.one == other.one and self.two == other.two and self.three == other.three and self.four == other.four))
