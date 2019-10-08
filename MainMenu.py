@@ -1,5 +1,7 @@
 import pygame
 
+import Enum as CEnum
+
 RED = (255, 0, 0)
 
 class MainMenu():
@@ -48,10 +50,33 @@ class MainMenu():
                 if secondButton.collidepoint(mouse_pos):
                     # prints current location of mouse
                     print('button 2 was pressed at {0}'.format(mouse_pos))
+                    self.fade(1520, 800)
+                    self.registry.GameScene = CEnum.GameScene.Render3D
 
         # Version Label
         self.font3 = pygame.font.Font('upheavtt.ttf', 33)
         self.registry.currentWindow.blit(self.font3.render('Version: 1.0.0', True, (255,255,255)), (1270, 750))
 
+        # amt = 2
+        # if amt < 1.0:
+        #     raise ValueError("Arg 'amt' must be greater than 1.0, passed in value is %10"%amt)
+        # scale = 1.0/float(amt)
+        # surf_size = self.registry.currentWindow.get_size()
+        # scale_size = (int(surf_size[0]*scale), int(surf_size[1]*scale))
+        # surf = pygame.transform.smoothscale(self.registry.currentWindow, scale_size)
+        # surf = pygame.transform.smoothscale(surf, surf_size)
+
     def render_first(self):
         pass
+
+    
+    def fade(self, width, height): 
+        fade = pygame.Surface((width, height), pygame.SRCALPHA)
+        fade.fill((0,0,0,5))
+        for alpha in range(0, 300):
+            fade.set_alpha(10)
+            self.registry.currentWindow.blit(fade, (0,0))
+            pygame.display.update()
+            pygame.time.delay(5)
+            
+
