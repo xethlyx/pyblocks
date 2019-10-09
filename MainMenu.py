@@ -59,9 +59,6 @@ class MainMenu():
                     self.fade(1520, 800)
                     self.registry.GameScene = CEnum.GameScene.Render3D
                     self.settingsClicked = False
-                
-                elif self.closeButton.collidepoint(mouse_pos):
-                    self.settingsClicked = False
 
         if self.settingsClicked:
             self.surf = pygame.Surface((1520, 800), pygame.SRCALPHA)
@@ -71,8 +68,31 @@ class MainMenu():
             self.view = pygame.draw.rect(self.registry.currentWindow, [189, 195, 199], [90, 90, 1330, 620])
 
             # Close Button
-            self.font3 = pygame.font.Font('upheavtt.ttf', 60)
-            self.closeButton = self.registry.currentWindow.blit(self.font3.render('X', True, (45, 52, 54)), (1360, 100))
+            self.font4 = pygame.font.Font('upheavtt.ttf', 60)
+            self.closeButton = self.registry.currentWindow.blit(self.font4.render('X', True, (45, 52, 54)), (1360, 100))
+
+            # Settings Label
+            self.font5 = pygame.font.Font('upheavtt.ttf', 100)
+            self.settingsLabel = self.registry.currentWindow.blit(self.font5.render('Settings', True, (45, 52, 54)), (130, 100))
+
+            # Switch
+            self.img = pygame.image.load('Switch1.png')
+            self.switch1 = self.registry.currentWindow.blit(self.img, (130,230))
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = event.pos  # gets mouse position
+
+                    # checks if mouse position is over the button
+                    if self.closeButton.collidepoint(mouse_pos):
+                        self.settingsClicked = False
+                    
+                    elif self.switch1.collidepoint(mouse_pos):
+                        print("swithc")
+
 
     def render_first(self):
         pass
