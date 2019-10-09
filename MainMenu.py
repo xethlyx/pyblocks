@@ -7,6 +7,7 @@ RED = (255, 0, 0)
 class MainMenu():
     def __init__(self, registry):
         pass
+        self.settingsClicked = False
         self.registry = registry
 
 
@@ -23,6 +24,10 @@ class MainMenu():
         # Title
         self.font2 = pygame.font.Font('upheavtt.ttf', 120)
         self.registry.currentWindow.blit(self.font2.render('PyBlocks', True, (255,255,255)), (60, 30))
+
+        # Version Label
+        self.font3 = pygame.font.Font('upheavtt.ttf', 33)
+        self.registry.currentWindow.blit(self.font3.render('Version: 1.0.0', True, (255,255,255)), (1270, 750))
 
         # First Button
         self.font = pygame.font.Font('upheavtt.ttf', 45)
@@ -46,29 +51,31 @@ class MainMenu():
                 if firstButton.collidepoint(mouse_pos):
                     # prints current location of mouse
                     print('button 1 was pressed at {0}'.format(mouse_pos))
-                
-                if secondButton.collidepoint(mouse_pos):
+                    self.settingsClicked = True
+
+                elif secondButton.collidepoint(mouse_pos):
                     # prints current location of mouse
                     print('button 2 was pressed at {0}'.format(mouse_pos))
                     self.fade(1520, 800)
                     self.registry.GameScene = CEnum.GameScene.Render3D
+                    self.settingsClicked = False
+                
+                elif self.closeButton.collidepoint(mouse_pos):
+                    self.settingsClicked = False
 
-        # Version Label
-        self.font3 = pygame.font.Font('upheavtt.ttf', 33)
-        self.registry.currentWindow.blit(self.font3.render('Version: 1.0.0', True, (255,255,255)), (1270, 750))
+        if self.settingsClicked:
+            self.surf = pygame.Surface((1520, 800), pygame.SRCALPHA)
+            self.surf.fill((0, 0, 0, 150))
+            self.backView = pygame.draw.rect(self.surf, [45, 52, 54, 150], [0, 0, 1520, 800])
+            self.registry.currentWindow.blit(self.surf, (0,0))
+            self.view = pygame.draw.rect(self.registry.currentWindow, [189, 195, 199], [90, 90, 1330, 620])
 
-        # amt = 2
-        # if amt < 1.0:
-        #     raise ValueError("Arg 'amt' must be greater than 1.0, passed in value is %10"%amt)
-        # scale = 1.0/float(amt)
-        # surf_size = self.registry.currentWindow.get_size()
-        # scale_size = (int(surf_size[0]*scale), int(surf_size[1]*scale))
-        # surf = pygame.transform.smoothscale(self.registry.currentWindow, scale_size)
-        # surf = pygame.transform.smoothscale(surf, surf_size)
+            # Close Button
+            self.font3 = pygame.font.Font('upheavtt.ttf', 60)
+            self.closeButton = self.registry.currentWindow.blit(self.font3.render('X', True, (45, 52, 54)), (1360, 100))
 
     def render_first(self):
         pass
-
     
     def fade(self, width, height): 
         fade = pygame.Surface((width, height), pygame.SRCALPHA)
