@@ -29,36 +29,16 @@ class TMatrix:
 
         newMatrix = TMatrix()
 
-        for rowNumber in range(len(newMatrix.matrix)):  # Increases slowest
-            for columnNumber in range(len(newMatrix.matrix[rowNumber])):  # Increases quicker
+        for rowNumber in range(len(newMatrix.matrix)):
+            for columnNumber in range(len(newMatrix.matrix[rowNumber])):
                 finalValue = 0
 
-                for loopValue in range(len(newMatrix.matrix[rowNumber])):  # Increases quickest
+                for loopValue in range(len(newMatrix.matrix[rowNumber])):
                     finalValue = finalValue + (self.matrix[rowNumber][loopValue] * other.matrix[loopValue][columnNumber])
 
                 newMatrix.matrix[rowNumber][columnNumber] = finalValue
 
         return newMatrix
-
-        # x0 = (self.matrix[1][0] * other.matrix[0][0] +
-        #       self.matrix[1][1] * other.matrix[1][0] +
-        #       self.matrix[1][2] * other.matrix[2][0] +
-        #       self.matrix[1][3] * other.matrix[3][0])
-
-        # x1 = (self.matrix[2][0] * other.matrix[0][0] +
-        #       self.matrix[2][1] * other.matrix[1][0] +
-        #       self.matrix[2][2] * other.matrix[2][0] +
-        #       self.matrix[2][3] * other.matrix[3][0])
-
-        # x2 = (self.matrix[3][0] * other.matrix[0][0] +
-        #       self.matrix[3][1] * other.matrix[1][0] +
-        #       self.matrix[3][2] * other.matrix[2][0] +
-        #       self.matrix[3][3] * other.matrix[3][0])
-
-        # y0 = (self.matrix[2][0] * other.matrix[0][0] +
-        #       self.matrix[2][1] * other.matrix[1][0] +
-        #       self.matrix[2][2] * other.matrix[2][0] +
-        #       self.matrix[2][3] * other.matrix[3][0])
 
     def set_scale(self, scale):
         self.matrix[0][0] = scale
@@ -72,9 +52,9 @@ class TMatrix:
     def __str__(self):
         finalAppend = "TMatrix("
 
-        for rowNumber in range(len(self.matrix)):  # Increases slowest
+        for rowNumber in range(len(self.matrix)):
             rowAppend = "    "
-            for columnNumber in range(len(self.matrix[rowNumber])):  # Increases quicker
+            for columnNumber in range(len(self.matrix[rowNumber])):
                 rowAppend = rowAppend + str(self.matrix[rowNumber][columnNumber])
                 if columnNumber < (len(self.matrix[rowNumber]) - 1):
                     rowAppend = rowAppend + ", "
@@ -92,9 +72,15 @@ class TMatrix:
         self.matrix[matrixAlias[valueName][0]][matrixAlias[valueName][1]] = newValue
 
     def lerp(self, other, amount):
+        newMatrix = TMatrix()
+
         def floatLerp(first, second, amount):
             return first * (1-amount) + (second*amount)
 
-        for rowNumber in range(len(self.matrix)):  # Increases slowest
+        for rowNumber in range(len(self.matrix)):
             for columnNumber in range(len(self.matrix[rowNumber])):  # Increases quicker
-                pass
+                newMatrix.matrix[rowNumber][columnNumber] = floatLerp(self.matrix[rowNumber][columnNumber],
+                                                                      other.matrix[rowNumber][columnNumber],
+                                                                      amount)
+
+        return newMatrix
