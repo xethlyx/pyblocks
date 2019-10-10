@@ -1,10 +1,18 @@
 # Manages all data going in and out
 import Util
+import Enum as CEnum
 
 
 class Registry():
     def __init__(self):
         self.entities = {}
+        self.settings = {
+            "ShowFps": {
+                "DisplayName": "Show FPS Counter",
+                "InputType": CEnum.InputFieldType.Switch,
+                "Value": False
+            }
+        }
 
     def __setattr__(self, attr, value):
         print("[REGISTRY] Attr {} has been changed to {}".format(attr, value))

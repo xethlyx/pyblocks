@@ -15,3 +15,14 @@ class GameScene(Enum):
 class UserInputType(Enum):
     Keyboard = "Keyboard"
     Mouse = "Mouse"
+
+
+class MainMenuScene(Enum):
+    MainMenu = "MainMenu"
+    Settings = "Settings"
+
+
+class InputFieldType(Enum):
+    Switch = "Switch"
+    TextBox = "TextBox"
+    NumberBox = "NumBox"

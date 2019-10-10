@@ -52,12 +52,13 @@ gameRegistry.GameScene = CEnum.GameScene.MainMenu
 while gameRegistry.Run == CEnum.GameState.Active:
     deltaTime = gameRegistry.LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            Run = CEnum.GameState.Dead
             
     if gameRegistry.GameScene == CEnum.GameScene.MainMenu:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameRegistry.Run = CEnum.GameState.Dead
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                gameRegistry.currentMainMenu.mouse_clicked(event)
         gameRegistry.currentMainMenu.render()
     elif gameRegistry.GameScene == CEnum.GameScene.Render3D:
         gameRegistry.currentController.key_down(pygame.key.get_pressed())
@@ -75,6 +76,6 @@ while gameRegistry.Run == CEnum.GameState.Active:
         # Draw the scene
         gameRegistry.currentCamera.render3d()
 
-        pygame.time.delay(50)
+        pygame.time.delay(1000/60)
     pygame.display.update()
 pygame.quit()
