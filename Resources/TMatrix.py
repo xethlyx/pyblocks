@@ -97,4 +97,4 @@ class TMatrix:
 
         for rowNumber in range(len(self.matrix)):  # Increases slowest
             for columnNumber in range(len(self.matrix[rowNumber])):  # Increases quicker
-
+                pass
