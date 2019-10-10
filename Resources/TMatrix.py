@@ -29,12 +29,12 @@ class TMatrix:
 
         newMatrix = TMatrix()
 
-        for rowNumber, rowValue in newMatrix:  # Increases slowest
-            for columnNumber, columnValue in rowValue:  # Increases quicker
+        for rowNumber in range(len(newMatrix.matrix)):  # Increases slowest
+            for columnNumber in range(len(newMatrix.matrix[rowNumber])):  # Increases quicker
                 finalValue = 0
 
-                for loopValue in range(len(rowValue)):  # Increases quickest
-                    finalValue = finalValue + (self.matrix[rowNumber][loopValue] * other.matrix[loopValue, columnNumber])
+                for loopValue in range(len(newMatrix.matrix[rowNumber])):  # Increases quickest
+                    finalValue = finalValue + (self.matrix[rowNumber][loopValue] * other.matrix[loopValue][columnNumber])
 
                 newMatrix.matrix[rowNumber][columnNumber] = finalValue
 
@@ -69,5 +69,32 @@ class TMatrix:
     def get_value(self, valueName):
         return self.matrix[matrixAlias[valueName][0]][matrixAlias[valueName][1]]
 
+    def __str__(self):
+        finalAppend = "TMatrix("
+
+        for rowNumber in range(len(self.matrix)):  # Increases slowest
+            rowAppend = "    "
+            for columnNumber in range(len(self.matrix[rowNumber])):  # Increases quicker
+                rowAppend = rowAppend + str(self.matrix[rowNumber][columnNumber])
+                if columnNumber < (len(self.matrix[rowNumber]) - 1):
+                    rowAppend = rowAppend + ", "
+
+            if rowNumber < (len(self.matrix[rowNumber]) - 1):
+                rowAppend = rowAppend + ", "
+
+            finalAppend = finalAppend + "\n" + rowAppend
+
+        finalAppend = finalAppend + "\n)"
+
+        return finalAppend
+
     def set_value(self, valueName, newValue):
         self.matrix[matrixAlias[valueName][0]][matrixAlias[valueName][1]] = newValue
+
+    def lerp(self, other, amount):
+        def floatLerp(first, second, amount):
+            return first * (1-amount) + (second*amount)
+
+        for rowNumber in range(len(self.matrix)):  # Increases slowest
+            for columnNumber in range(len(self.matrix[rowNumber])):  # Increases quicker
+
