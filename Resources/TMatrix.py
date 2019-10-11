@@ -68,6 +68,12 @@ class TMatrix:
 
         return finalAppend
 
+    def __eq__(self, other):
+        if not isinstance(other, TMatrix):
+            return NotImplemented
+
+        return(str(self) == str(other))
+
     def set_value(self, valueName, newValue):
         self.matrix[matrixAlias[valueName][0]][matrixAlias[valueName][1]] = newValue
 
@@ -84,3 +90,42 @@ class TMatrix:
                                                                       amount)
 
         return newMatrix
+
+    # Not my code below this line, taken from https://stackoverflow.com/a/39881366
+
+    def transpose_matrix(self, matrix=None):
+        dMatrix = matrix or self.matrix
+        return map(list, zip(*dMatrix))
+
+    def get_matrix_minor(self, i, j, matrix=None):
+        loopingMatrix = matrix or self.matrix
+        return [row[:j] + row[j+1:] for row in (loopingMatrix[:i] + loopingMatrix[i+1:])]
+
+    def get_matrix_determinant(self, matrix=None):
+        dMatrix = matrix or self.matrix
+        if len(self) == 2:
+            return dMatrix[0][0] * dMatrix[1][1]-dMatrix[0][1]*dMatrix[1][0]
+
+        determinant = 0
+        for c in range(len(dMatrix)):
+            determinant += ((-1)**c)*dMatrix[0][c]*self.get_matrix_determinant(self.get_matrix_minor(0, c, dMatrix))
+        return determinant
+
+    def get_matrix_inverse(self):
+        determinant = self.get_matrix_determinant()
+        if len(self.matrix) == 2:
+            return [[self.matrix[1][1]/determinant, -1*self.matrix[0][1]/determinant],
+                    [-1*self.matrix[1][0]/determinant, self.matrix[0][0]/determinant]]
+
+        cofactors = []
+        for r in range(len(self.matrix)):
+            cofactorRow = []
+            for c in range(len(self.matrix)):
+                minor = self.get_matrix_minor(r, c)
+                cofactorRow.append(((-1)**(r+c)) * self.get_matrix_determinant(minor))
+            cofactors.append(cofactorRow)
+        cofactors = self.transpose_matrix(cofactors)
+        for r in range(len(cofactors)):
+            for c in range(len(cofactors)):
+                cofactors[r][c] = cofactors[r][c]/determinant
+        return cofactors
