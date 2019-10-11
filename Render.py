@@ -35,7 +35,16 @@ class Camera:
 
         frameSize = FSize(biggestDim, biggestDim)
 
-        distance = (self.transform - transform).get_magnitude()
+        distance = self.transform.distance_from(transform)
+
+        cameraPoint = self.transform * TMatrix(
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0,
+            distance, 0, 0
+        )
+
+        
 
     def render3d(self):
         self.tmatrix_to_position(TMatrix())

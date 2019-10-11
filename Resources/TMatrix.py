@@ -1,3 +1,6 @@
+import math
+
+
 matrixAlias = {
     "x0": [1, 0],
     "x1": [2, 0],
@@ -90,6 +93,13 @@ class TMatrix:
                                                                       amount)
 
         return newMatrix
+
+    def distance_from(self, other):
+        return(math.sqrt(
+            (self.get_value("xp") - other.get_value("xp"))**2 +
+            (self.get_value("yp") - other.get_value("yp"))**2 +
+            (self.get_value("zp") - other.get_value("zp"))**2
+        ))
 
     # Not my code below this line, taken from https://stackoverflow.com/a/39881366
 
