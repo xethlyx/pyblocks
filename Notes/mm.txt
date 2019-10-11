@@ -1,0 +1,8 @@
+
+Oct 11
+
+- SETTINGS
+    - ShowFPS
+    - FOV (120max, def=90, min=20)
+    - FPS Cap
+    - Advanced Graphics
