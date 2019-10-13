@@ -30,6 +30,20 @@ class TMatrix:
         # Key:
         #   self.matrix[row, #] * other.matrix(#, column)
 
+        if not isinstance(other, TMatrix):
+            if isinstance(other, (int, float)):
+                print("operation is with scalar")
+                newMatrix = TMatrix()
+
+                newMatrix.matrix = self.matrix
+
+                for rowNumber in range(len(newMatrix.matrix)):
+                    for columnNumber in range(len(newMatrix.matrix[rowNumber])):
+                        newMatrix.matrix[rowNumber][columnNumber] = newMatrix.matrix[rowNumber][columnNumber] * other
+
+                return newMatrix
+            return NotImplemented
+
         newMatrix = TMatrix()
 
         for rowNumber in range(len(newMatrix.matrix)):
@@ -105,6 +119,7 @@ class TMatrix:
 
     def transpose_matrix(self, matrix=None):
         dMatrix = matrix or self.matrix
+        print(dMatrix)
         return map(list, zip(*dMatrix))
 
     def get_matrix_minor(self, i, j, matrix=None):
@@ -113,7 +128,7 @@ class TMatrix:
 
     def get_matrix_determinant(self, matrix=None):
         dMatrix = matrix or self.matrix
-        if len(self) == 2:
+        if len(dMatrix) == 2:
             return dMatrix[0][0] * dMatrix[1][1]-dMatrix[0][1]*dMatrix[1][0]
 
         determinant = 0
@@ -134,8 +149,21 @@ class TMatrix:
                 minor = self.get_matrix_minor(r, c)
                 cofactorRow.append(((-1)**(r+c)) * self.get_matrix_determinant(minor))
             cofactors.append(cofactorRow)
-        cofactors = self.transpose_matrix(cofactors)
+        cofactors = list(self.transpose_matrix(cofactors))
         for r in range(len(cofactors)):
             for c in range(len(cofactors)):
-                cofactors[r][c] = cofactors[r][c]/determinant
-        return cofactors
+                try:
+                    cofactors[r][c] = cofactors[r][c]/determinant
+                except ZeroDivisionError:
+                    cofactors[r][c] = cofactors[r][c]
+
+        newMatrix = TMatrix()
+
+        newMatrix.matrix = cofactors
+
+        return newMatrix
+
+    def inverse_check(self):
+        """Should return an identity matrix if working correctly."""
+
+        return str(self * self.get_matrix_inverse())

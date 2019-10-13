@@ -30,21 +30,20 @@ class Camera:
         Arguments:
             transform (TMatrix) -- A TMatrix created using the TMatrix constructor.
         """
+
         width, height = self.registry.currentWindow.get_size()
-        biggestDim = max((width, height))
+        # biggestDim = max((width, height))
 
-        frameSize = FSize(biggestDim, biggestDim)
+        localTransform = transform * self.transform.get_matrix_inverse()
 
-        distance = self.transform.distance_from(transform)
+        # frameSize = FSize(biggestDim, biggestDim)
 
-        cameraPoint = self.transform * TMatrix(
-            0, 0, 0,
-            0, 0, 0,
-            0, 0, 0,
-            distance, 0, 0
-        )
+        if localTransform.get_value("zp") < 1:
+            projectedX = (self.transform * localTransform.get_value("xp")) * (self.transform * localTransform.get_value("zp")).get_matrix_inverse()
+            projectedY = (self.transform * localTransform.get_value("yp")) * (self.transform * localTransform.get_value("zp")).get_matrix_inverse()
 
-        
+            print(projectedX)
+            print(projectedY)
 
     def render3d(self):
         self.tmatrix_to_position(TMatrix())
