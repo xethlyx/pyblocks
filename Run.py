@@ -52,7 +52,7 @@ gameRegistry.GameScene = CEnum.GameScene.MainMenu
 while gameRegistry.Run == CEnum.GameState.Active:
     deltaTime = gameRegistry.LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
-            
+
     if gameRegistry.GameScene == CEnum.GameScene.MainMenu:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -76,6 +76,6 @@ while gameRegistry.Run == CEnum.GameState.Active:
         # Draw the scene
         gameRegistry.currentCamera.render3d()
 
-        pygame.time.delay(1000/60)
+        pygame.time.delay(int(1000/60))
     pygame.display.update()
 pygame.quit()
