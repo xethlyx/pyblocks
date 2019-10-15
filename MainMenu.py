@@ -56,9 +56,17 @@ class MainMenu():
             else:
                 self.img = pygame.image.load('Switch0.png')
 
+
     def mouse_clicked(self, event):
         mouse_pos = event.pos  # gets mouse position
-
+        
+        if self.secondButton.collidepoint(mouse_pos) and self.settingsClicked == False:
+            # prints current location of mouse
+            print('button 2 was pressed at {0}'.format(mouse_pos))
+            self.fade(1520, 800)
+            self.registry.GameScene = CEnum.GameScene.Render3D
+            self.settingsClicked = False
+            
         if self.firstButton.collidepoint(mouse_pos):
             # prints current location of mouse
             print('button 1 was pressed at {0}'.format(mouse_pos))
@@ -91,13 +99,6 @@ class MainMenu():
                 self.font6 = pygame.font.Font('upheavtt.ttf', 30)
                 self.fpsLabel = self.registry.currentWindow.blit(self.font6.render('Show FPS Counter', True, (45, 52, 54)), (230, 265))
                 self.switch1 = self.registry.currentWindow.blit(self.img, (130, 260))
-
-        if self.secondButton.collidepoint(mouse_pos) and self.settingsClicked == False:
-            # prints current location of mouse
-            print('button 2 was pressed at {0}'.format(mouse_pos))
-            self.fade(1520, 800)
-            self.registry.GameScene = CEnum.GameScene.Render3D
-            self.settingsClicked = False
 
         elif self.switch1.collidepoint(mouse_pos):
             self.registry.settings["ShowFps"]["Value"] = not self.registry.settings["ShowFps"]["Value"]
