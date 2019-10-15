@@ -11,6 +11,11 @@ class Registry():
                 "DisplayName": "Show FPS Counter",
                 "InputType": CEnum.InputFieldType.Switch,
                 "Value": False
+            },
+            "ShowVer": {
+                "DisplayName": "Show Version",
+                "InputType": CEnum.InputFieldType.Switch,
+                "Value": False
             }
         }
 
