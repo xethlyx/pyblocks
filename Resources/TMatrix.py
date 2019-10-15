@@ -32,7 +32,6 @@ class TMatrix:
 
         if not isinstance(other, TMatrix):
             if isinstance(other, (int, float)):
-                print("operation is with scalar")
                 newMatrix = TMatrix()
 
                 newMatrix.matrix = self.matrix
@@ -119,7 +118,6 @@ class TMatrix:
 
     def transpose_matrix(self, matrix=None):
         dMatrix = matrix or self.matrix
-        print(dMatrix)
         return map(list, zip(*dMatrix))
 
     def get_matrix_minor(self, i, j, matrix=None):
@@ -147,7 +145,7 @@ class TMatrix:
             cofactorRow = []
             for c in range(len(self.matrix)):
                 minor = self.get_matrix_minor(r, c)
-                cofactorRow.append(((-1)**(r+c)) * self.get_matrix_determinant(minor))
+                cofactorRow.append(((-1)**(r + c)) * self.get_matrix_determinant(minor))
             cofactors.append(cofactorRow)
         cofactors = list(self.transpose_matrix(cofactors))
         for r in range(len(cofactors)):
@@ -155,7 +153,7 @@ class TMatrix:
                 try:
                     cofactors[r][c] = cofactors[r][c]/determinant
                 except ZeroDivisionError:
-                    cofactors[r][c] = cofactors[r][c]
+                    cofactors[r][c] = 0
 
         newMatrix = TMatrix()
 

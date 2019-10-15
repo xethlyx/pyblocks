@@ -1,7 +1,6 @@
 """A .py file containing assets required for 3D rendering the scene"""
 
 from Resources.TMatrix import TMatrix
-from Resources.FSize import FSize
 
 
 class Camera:
@@ -38,12 +37,22 @@ class Camera:
 
         # frameSize = FSize(biggestDim, biggestDim)
 
-        if localTransform.get_value("zp") < 1:
-            projectedX = (self.transform * localTransform.get_value("xp")) * (self.transform * localTransform.get_value("zp")).get_matrix_inverse()
-            projectedY = (self.transform * localTransform.get_value("yp")) * (self.transform * localTransform.get_value("zp")).get_matrix_inverse()
+        print(localTransform.get_value("zp"))
 
-            print(projectedX)
-            print(projectedY)
+        if localTransform.get_value("zp") > 0:
+            print("found point to be displayed")
+            transformedZ = self.transform * localTransform.get_value("zp")
+            transformedZ.set_scale(1)
+            transformedZ = transformedZ.get_matrix_inverse()
+
+            projectedX = self.transform * localTransform.get_value("xp")
+            projectedY = self.transform * localTransform.get_value("yp")
+
+            projectedX.set_scale(1)
+            projectedY.set_scale(1)
+
+            projectedX = projectedX * transformedZ
+            projectedY = projectedY * transformedZ
 
     def render3d(self):
-        self.tmatrix_to_position(TMatrix())
+        self.tmatrix_to_position(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 100, 200))
