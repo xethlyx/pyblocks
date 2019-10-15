@@ -110,8 +110,11 @@ class MainMenu():
                 self.switch2 = self.registry.currentWindow.blit(self.switchImage2, (130, 325))
 
                 # FPS Limit
-                self.limitLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["FpsLimit"]["DisplayName"], True, (45, 52, 54)), (230, 395))
-                self.limitInt = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["FpsLimit"]["DisplayName"], True, (45, 52, 54)), (230, 395))
+                self.limitLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["FpsLimit"]["DisplayName"], True, (45, 52, 54)), (240, 395))
+                self.fpsRect = pygame.draw.rect(self.registry.currentWindow, [116, 125, 140], [110, 393, 115, 35])
+                self.minusFps = self.registry.currentWindow.blit(self.font6.render("-", True, (255, 255, 255)), (120, 395))
+                self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
+                self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
 
         try:
             if self.closeButton.collidepoint(mouse_pos):
@@ -134,6 +137,12 @@ class MainMenu():
                 else:
                     self.switchImage2 = pygame.image.load('Switch0.png')
                 self.switchImage2 = self.registry.currentWindow.blit(self.switchImage2, (130, 325))
+            
+            elif self.plusFps.collidepoint(mouse_pos):
+                self.registry.settings["FpsLimit"]["Value"] += 10
+                self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
+                
+
         except AttributeError:
             print("[MAINMENU] fix your code")
 
