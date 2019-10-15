@@ -16,6 +16,10 @@ class Registry():
                 "DisplayName": "Show Version",
                 "InputType": CEnum.InputFieldType.Switch,
                 "Value": False
+            },
+            "FpsLimit": {
+                "DisplayName": "FPS Limit",
+                "Value": -1
             }
         }
 

@@ -5,4 +5,10 @@ Oct 11
     - ShowFPS
     - FOV (120max, def=90, min=20)
     - FPS Cap
-    - Advanced Graphics
+    - Advanced Graphics'
+
+
+
+- COLORS
+    - Green = rgb(46, 213, 115)
+    - Purple = rgb(83, 82, 237)
