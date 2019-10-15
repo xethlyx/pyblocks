@@ -1,5 +1,7 @@
 """A .py file containing assets required for 3D rendering the scene"""
 
+import pygame
+
 from Resources.TMatrix import TMatrix
 
 
@@ -37,10 +39,7 @@ class Camera:
 
         # frameSize = FSize(biggestDim, biggestDim)
 
-        print(localTransform.get_value("zp"))
-
         if localTransform.get_value("zp") > 0:
-            print("found point to be displayed")
             transformedZ = self.transform * localTransform.get_value("zp")
             transformedZ.set_scale(1)
             transformedZ = transformedZ.get_matrix_inverse()
@@ -55,4 +54,10 @@ class Camera:
             projectedY = projectedY * transformedZ
 
     def render3d(self):
+        for block in self.registry.currentScene.blocks:
+            print("block found")
+            for num, vertex in block.obj["Verticies"]:
+                pygame.draw.circle(self.registry.currentWindow, (50, 50, 50))
+
         self.tmatrix_to_position(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 100, 200))
+        pygame.draw.polygon(self.registry.currentWindow, (50, 50, 50), ())

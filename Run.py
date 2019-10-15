@@ -20,10 +20,15 @@ from Render import Camera
 from MainMenu import MainMenu
 from MovementController import MovementController
 from Registry import Registry
+from Scene import Scene
 
 # Data Types
 
 from Resources.TMatrix import TMatrix
+
+# Debug
+
+from Blocks.Block import Block
 
 # # # Main Code # # #
 
@@ -39,6 +44,7 @@ gameRegistry = Registry()
 gameRegistry.currentCamera = Camera(90, TMatrix(), gameRegistry)
 gameRegistry.currentController = MovementController()
 gameRegistry.currentMainMenu = MainMenu(gameRegistry)
+gameRegistry.currentScene = Scene()
 
 gameRegistry.currentWindow = window
 
@@ -46,6 +52,15 @@ gameRegistry.LastRun = datetime.datetime.now()
 gameRegistry.Run = CEnum.GameState.Active
 
 gameRegistry.GameScene = CEnum.GameScene.MainMenu
+
+# Debug generate blocks
+
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), gameRegistry.currentScene)
 
 # # # Main Loop # # #
 
