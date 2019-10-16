@@ -20,6 +20,10 @@ class Registry():
             "FpsLimit": {
                 "DisplayName": "FPS Limit",
                 "Value": 60
+            },
+            "Sounds": {
+                "DisplayName": "Sounds",
+                "Value": True
             }
         }
 
