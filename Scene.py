@@ -11,13 +11,14 @@ class Scene:
     def __init__(self):
         self.blocks = {}
 
-    def register_block(self, block, transform):
-        blankMatrix4 = Matrix4()
+    def register_block(self, block):
+        # blankMatrix4 = Matrix4()
+        # transform = block.transform
 
-        if not (transform.x == blankMatrix4 and transform.y == blankMatrix4 and transform.z == blankMatrix4):
-            warn("A block should be kept with 0 rotation!", UserWarning)
+        # if not (transform.x == blankMatrix4 and transform.y == blankMatrix4 and transform.z == blankMatrix4):
+        #    warn("A block should be kept with 0 rotation!", UserWarning)
 
-        block.registeredUuid = uuid.uuid4()
+        # block.registeredUuid = uuid.uuid4()
 
         self.blocks[block.registeredUuid] = block
 
