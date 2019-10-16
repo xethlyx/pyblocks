@@ -83,6 +83,11 @@ class MainMenu():
             else:
                 self.switchImage2 = pygame.image.load('Switch0.png')
 
+            if self.registry.settings["Sounds"]["Value"]:
+                self.switchImage3 = pygame.image.load('Switch1.png')
+            else:
+                self.switchImage3 = pygame.image.load('Switch0.png')
+
             if not self.firstSettings:
 
                 if self.generalSettings:
@@ -121,6 +126,10 @@ class MainMenu():
                     self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
                     self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
                     self.fps_color()
+
+                    # Sounds
+                    self.soundsLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["Sounds"]["DisplayName"], True, (45, 52, 54)), (230, 460))
+                    self.switch3 = self.registry.currentWindow.blit(self.switchImage3, (130, 455))
                 
                 else:
                     # Render Settings
@@ -158,7 +167,7 @@ class MainMenu():
                 self.firstSettings = False
                 self.generalSettings = False
 
-            elif self.switch1.collidepoint(mouse_pos):
+            if self.switch1.collidepoint(mouse_pos):
                 self.registry.settings["ShowFps"]["Value"] = not self.registry.settings["ShowFps"]["Value"]
                 if self.registry.settings["ShowFps"]["Value"]:
                     self.switchImage1 = pygame.image.load('Switch1.png')
@@ -173,6 +182,14 @@ class MainMenu():
                 else:
                     self.switchImage2 = pygame.image.load('Switch0.png')
                 self.switchImage2 = self.registry.currentWindow.blit(self.switchImage2, (130, 325))
+
+            elif self.switch3.collidepoint(mouse_pos):
+                self.registry.settings["Sounds"]["Value"] = not self.registry.settings["Sounds"]["Value"]
+                if self.registry.settings["Sounds"]["Value"]:
+                    self.switchImage3 = pygame.image.load('Switch1.png')
+                else:
+                    self.switchImage3 = pygame.image.load('Switch0.png')
+                self.switchImage3 = self.registry.currentWindow.blit(self.switchImage3, (130, 455))
             
             elif self.plusFps.collidepoint(mouse_pos):
                 self.registry.settings["FpsLimit"]["Value"] += 10
