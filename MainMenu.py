@@ -141,6 +141,7 @@ class MainMenu():
             elif self.plusFps.collidepoint(mouse_pos):
                 self.registry.settings["FpsLimit"]["Value"] += 10
                 self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
+                self.draw_main_menu
                 
 
         except AttributeError:
