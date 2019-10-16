@@ -20,7 +20,7 @@ class Camera:
         self.fov = fov
         self.registry = registry
 
-        self.blockScale = 40
+        self.blockScale = 20
 
         if isinstance(transform, TMatrix):
             self.transform = transform
@@ -37,6 +37,8 @@ class Camera:
         canvasWidth, canvasHeight = self.registry.currentWindow.get_size()
 
         localTransform = transform * self.transform.get_matrix_inverse()
+        localTransform *= 4
+        localTransform.set_scale(self.blockScale)
 
         if localTransform.get_value("zp") > 0:
             zScreen = -localTransform.get_value("zp")
@@ -66,9 +68,9 @@ class Camera:
             print("found block")
             for vertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
                 vertexPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0] * self.blockScale,
-                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1] * self.blockScale,
-                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][2] * self.blockScale)
+                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0],
+                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1],
+                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][2])
 
                 vertexPosition *= self.registry.currentScene.blocks[blockUuid].transform
                 vertexPosition = self.tmatrix_to_position(vertexPosition)
