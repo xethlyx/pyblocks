@@ -20,6 +20,8 @@ class Camera:
         self.fov = fov
         self.registry = registry
 
+        self.blockScale = 40
+
         if isinstance(transform, TMatrix):
             self.transform = transform
         else:
@@ -32,32 +34,48 @@ class Camera:
             transform (TMatrix) -- A TMatrix created using the TMatrix constructor.
         """
 
-        width, height = self.registry.currentWindow.get_size()
-        # biggestDim = max((width, height))
+        canvasWidth, canvasHeight = self.registry.currentWindow.get_size()
 
         localTransform = transform * self.transform.get_matrix_inverse()
 
-        # frameSize = FSize(biggestDim, biggestDim)
-
         if localTransform.get_value("zp") > 0:
-            transformedZ = self.transform * localTransform.get_value("zp")
-            transformedZ.set_scale(1)
-            transformedZ = transformedZ.get_matrix_inverse()
+            zScreen = -localTransform.get_value("zp")
 
-            projectedX = self.transform * localTransform.get_value("xp")
-            projectedY = self.transform * localTransform.get_value("yp")
+            screenPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                     localTransform.get_value("xp") * zScreen,
+                                     localTransform.get_value("yp") * zScreen,
+                                     0)
 
-            projectedX.set_scale(1)
-            projectedY.set_scale(1)
+            if abs((screenPosition.get_value("xp") > canvasWidth) or (screenPosition.get_value("yp") > canvasHeight)):
+                return False
 
-            projectedX = projectedX * transformedZ
-            projectedY = projectedY * transformedZ
+            # Normalize screen pos
+
+            screenPosition.set_value("xp", (screenPosition.get_value("xp") + canvasWidth / 2) / canvasWidth)
+            screenPosition.set_value("yp", (screenPosition.get_value("yp") + canvasWidth / 2) / canvasWidth)
+
+            return([abs(int(screenPosition.get_value("xp") * canvasWidth)), abs(int(screenPosition.get_value("yp") * canvasHeight))])
+
+        return False
 
     def render3d(self):
-        for block in self.registry.currentScene.blocks:
-            print("block found")
-            for num, vertex in block.obj["Verticies"]:
-                pygame.draw.circle(self.registry.currentWindow, (50, 50, 50))
+        # Reset scene
+        self.registry.currentWindow.fill((0, 0, 0))
+
+        for blockUuid in self.registry.currentScene.blocks:
+            print("found block")
+            for vertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
+                vertexPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0] * self.blockScale,
+                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1] * self.blockScale,
+                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][2] * self.blockScale)
+
+                vertexPosition *= self.registry.currentScene.blocks[blockUuid].transform
+                vertexPosition = self.tmatrix_to_position(vertexPosition)
+
+                print("Drawing point at " + str(vertexPosition))
+
+                if vertexPosition:
+                    pygame.draw.circle(self.registry.currentWindow, (50, 50, 50), vertexPosition, 2)
 
         self.tmatrix_to_position(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 100, 200))
-        pygame.draw.polygon(self.registry.currentWindow, (50, 50, 50), ())

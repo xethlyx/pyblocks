@@ -90,6 +90,9 @@ class TMatrix:
 
         return(str(self) == str(other))
 
+    def __neg__(self):
+        return self.get_matrix_inverse()
+
     def set_value(self, valueName, newValue):
         self.matrix[matrixAlias[valueName][0]][matrixAlias[valueName][1]] = newValue
 
