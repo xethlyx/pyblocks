@@ -1,10 +1,7 @@
 """Handles all blocks in the world"""
 
 
-from warnings import warn
-import uuid
-
-from Resources.Matrix4 import Matrix4
+from Util import generate_unique_uuid_retry
 
 
 class Scene:
@@ -12,13 +9,7 @@ class Scene:
         self.blocks = {}
 
     def register_block(self, block):
-        # blankMatrix4 = Matrix4()
-        # transform = block.transform
-
-        # if not (transform.x == blankMatrix4 and transform.y == blankMatrix4 and transform.z == blankMatrix4):
-        #    warn("A block should be kept with 0 rotation!", UserWarning)
-
-        # block.registeredUuid = uuid.uuid4()
+        block.registeredUuid = generate_unique_uuid_retry(self.blocks)
 
         self.blocks[block.registeredUuid] = block
 

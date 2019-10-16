@@ -55,12 +55,12 @@ gameRegistry.GameScene = CEnum.GameScene.MainMenu
 
 # Debug generate blocks
 
-# Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0), gameRegistry.currentScene)
-# Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1), gameRegistry.currentScene)
-# Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), gameRegistry.currentScene)
-# Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0), gameRegistry.currentScene)
-# Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1), gameRegistry.currentScene)
-# Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1), gameRegistry.currentScene)
+Block(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), gameRegistry.currentScene)
 
 # # # Main Loop # # #
 
