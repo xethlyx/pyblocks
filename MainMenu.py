@@ -12,8 +12,9 @@ class MainMenu():
         self.scene = CEnum.MainMenuScene.MainMenu
         self.registry = registry
         self.settingsClicked = False
-        self.switchImage = pygame.image.load('Switch1.png')
         self.scrollPosition = 0
+
+        self.generalSettings = True
 
         # First
         self.firstLoad = True
@@ -51,16 +52,6 @@ class MainMenu():
             self.firstLoad = False
             self.draw_main_menu()
 
-            if self.registry.settings["ShowFps"]["Value"]:
-                self.switchImage1 = pygame.image.load('Switch1.png')
-            else:
-                self.switchImage1 = pygame.image.load('Switch0.png')
-
-            if self.registry.settings["ShowVer"]["Value"]:
-                self.switchImage2 = pygame.image.load('Switch1.png')
-            else:
-                self.switchImage2 = pygame.image.load('Switch0.png')
-
     def mouse_clicked(self, event):
         mouse_pos = event.pos  # gets mouse position
 
@@ -75,46 +66,81 @@ class MainMenu():
             print('button 1 was pressed at {0}'.format(mouse_pos))
             self.settingsClicked = True
 
+            self.surf = pygame.Surface((1520, 800), pygame.SRCALPHA)
+            self.surf.fill((0, 0, 0, 150))
+            self.backView = pygame.draw.rect(self.surf, [45, 52, 54, 150], [0, 0, 1520, 800])
+            self.registry.currentWindow.blit(self.surf, (0, 0))
+
         if self.settingsClicked:
 
+            if self.registry.settings["ShowFps"]["Value"]:
+                self.switchImage1 = pygame.image.load('Switch1.png')
+            else:
+                self.switchImage1 = pygame.image.load('Switch0.png')
+
+            if self.registry.settings["ShowVer"]["Value"]:
+                self.switchImage2 = pygame.image.load('Switch1.png')
+            else:
+                self.switchImage2 = pygame.image.load('Switch0.png')
+
             if not self.firstSettings:
-                self.firstSettings = True
-                self.surf = pygame.Surface((1520, 800), pygame.SRCALPHA)
-                self.surf.fill((0, 0, 0, 150))
-                self.backView = pygame.draw.rect(self.surf, [45, 52, 54, 150], [0, 0, 1520, 800])
-                self.registry.currentWindow.blit(self.surf, (0, 0))
-                self.view = pygame.draw.rect(self.registry.currentWindow, [189, 195, 199], [90, 90, 1330, 620])
 
-                # Close Button
-                self.font4 = pygame.font.Font('upheavtt.ttf', 60)
-                self.closeButton = self.registry.currentWindow.blit(self.font4.render('X', True, (45, 52, 54)), (1360, 100))
+                if self.generalSettings:
+                    # General Settings
+                    self.firstSettings = True
+                    self.view = pygame.draw.rect(self.registry.currentWindow, [189, 195, 199], [90, 90, 1330, 620])
 
-                # Settings Label
-                self.font5 = pygame.font.Font('upheavtt.ttf', 100)
-                self.settingsLabel = self.registry.currentWindow.blit(self.font5.render('Settings', True, (45, 52, 54)), (130, 100))
+                    # Close Button
+                    self.font4 = pygame.font.Font('upheavtt.ttf', 60)
+                    self.closeButton = self.registry.currentWindow.blit(self.font4.render('X', True, (45, 52, 54)), (1360, 100))
 
-                # General Button
-                self.buttonFont = pygame.font.Font('upheavtt.ttf', 33)
-                self.generalButton = self.registry.currentWindow.blit(self.buttonFont.render('General', True, (83, 82, 237)), (130, 190))
+                    # Settings Label
+                    self.font5 = pygame.font.Font('upheavtt.ttf', 100)
+                    self.settingsLabel = self.registry.currentWindow.blit(self.font5.render('Settings', True, (45, 52, 54)), (130, 100))
 
-                # Advanced Button
-                self.generalButton = self.registry.currentWindow.blit(self.buttonFont.render('Render', True, (45, 52, 54)), (464, 190))
+                    # General Button
+                    self.buttonFont = pygame.font.Font('upheavtt.ttf', 33)
+                    self.generalButton = self.registry.currentWindow.blit(self.buttonFont.render('General', True, (83, 82, 237)), (130, 190))
 
-                # FPS Counter
-                self.font6 = pygame.font.Font('upheavtt.ttf', 30)
-                self.fpsLabel = self.registry.currentWindow.blit(self.font6.render('Show FPS Counter', True, (45, 52, 54)), (230, 265))
-                self.switch1 = self.registry.currentWindow.blit(self.switchImage1, (130, 260))
+                    # Advanced Button
+                    self.renderButton = self.registry.currentWindow.blit(self.buttonFont.render('Render', True, (45, 52, 54)), (464, 190))
 
-                # Show Version
-                self.verLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["ShowVer"]["DisplayName"], True, (45, 52, 54)), (230, 330))
-                self.switch2 = self.registry.currentWindow.blit(self.switchImage2, (130, 325))
+                    # FPS Counter
+                    self.font6 = pygame.font.Font('upheavtt.ttf', 30)
+                    self.fpsLabel = self.registry.currentWindow.blit(self.font6.render('Show FPS Counter', True, (45, 52, 54)), (230, 265))
+                    self.switch1 = self.registry.currentWindow.blit(self.switchImage1, (130, 260))
 
-                # FPS Limit
-                self.limitLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["FpsLimit"]["DisplayName"], True, (45, 52, 54)), (240, 395))
-                self.fpsRect = pygame.draw.rect(self.registry.currentWindow, [116, 125, 140], [110, 393, 115, 35])
-                self.minusFps = self.registry.currentWindow.blit(self.font6.render("-", True, (255, 255, 255)), (120, 395))
-                self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
-                self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
+                    # Show Version
+                    self.verLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["ShowVer"]["DisplayName"], True, (45, 52, 54)), (230, 330))
+                    self.switch2 = self.registry.currentWindow.blit(self.switchImage2, (130, 325))
+
+                    # FPS Limit
+                    self.limitLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["FpsLimit"]["DisplayName"], True, (45, 52, 54)), (240, 395))
+                    self.fpsRect = pygame.draw.rect(self.registry.currentWindow, [116, 125, 140], [110, 393, 115, 35])
+                    self.minusFps = self.registry.currentWindow.blit(self.font6.render("-", True, (255, 255, 255)), (120, 395))
+                    self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
+                    self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
+                    self.fps_color()
+                
+                else:
+                    # Render Settings
+                    self.firstSettings = True
+                    self.view = pygame.draw.rect(self.registry.currentWindow, [189, 195, 199], [90, 90, 1330, 620])
+
+                    # Close Button
+                    self.font4 = pygame.font.Font('upheavtt.ttf', 60)
+                    self.closeButton = self.registry.currentWindow.blit(self.font4.render('X', True, (45, 52, 54)), (1360, 100))
+
+                    # Settings Label
+                    self.font5 = pygame.font.Font('upheavtt.ttf', 100)
+                    self.settingsLabel = self.registry.currentWindow.blit(self.font5.render('Settings', True, (45, 52, 54)), (130, 100))
+
+                    # General Button
+                    self.buttonFont = pygame.font.Font('upheavtt.ttf', 33)
+                    self.generalButton = self.registry.currentWindow.blit(self.buttonFont.render('General', True, (45, 52, 54)), (130, 190))
+
+                    # Advanced Button
+                    self.renderButton = self.registry.currentWindow.blit(self.buttonFont.render('Render', True, (83, 82, 237)), (464, 190))
 
         try:
             if self.closeButton.collidepoint(mouse_pos):
@@ -122,7 +148,17 @@ class MainMenu():
                 self.draw_main_menu()
                 self.firstSettings = False
 
-            if self.switch1.collidepoint(mouse_pos):
+            if self.generalButton.collidepoint(mouse_pos):
+                self.settingsClicked = True
+                self.firstSettings = False
+                self.generalSettings = True
+
+            if self.renderButton.collidepoint(mouse_pos):
+                self.settingsClicked = True
+                self.firstSettings = False
+                self.generalSettings = False
+
+            elif self.switch1.collidepoint(mouse_pos):
                 self.registry.settings["ShowFps"]["Value"] = not self.registry.settings["ShowFps"]["Value"]
                 if self.registry.settings["ShowFps"]["Value"]:
                     self.switchImage1 = pygame.image.load('Switch1.png')
@@ -140,12 +176,38 @@ class MainMenu():
             
             elif self.plusFps.collidepoint(mouse_pos):
                 self.registry.settings["FpsLimit"]["Value"] += 10
+                self.fpsRect = pygame.draw.rect(self.registry.currentWindow, [116, 125, 140], [110, 393, 115, 35])
+                self.minusFps = self.registry.currentWindow.blit(self.font6.render("-", True, (255, 255, 255)), (120, 395))
+                self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
                 self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
-                self.draw_main_menu
-                
 
+                self.fps_color()
+            
+            elif self.minusFps.collidepoint(mouse_pos):
+                if self.registry.settings["FpsLimit"]["Value"] > 10:
+                    self.registry.settings["FpsLimit"]["Value"] -= 10
+                    self.fpsRect = pygame.draw.rect(self.registry.currentWindow, [116, 125, 140], [110, 393, 115, 35])
+                    self.minusFps = self.registry.currentWindow.blit(self.font6.render("-", True, (255, 255, 255)), (120, 395))
+                    self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
+                    self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 255, 255)), (152, 395))
+                
+                self.fps_color()
+                
         except AttributeError:
             print("[MAINMENU] fix your code")
 
     def render_first(self):
         pass
+
+    def fps_color(self):
+         # If greater than 110fps, green, if under 30fps, red.
+        if self.registry.settings["FpsLimit"]["Value"] <= 30:
+            self.fpsRect = pygame.draw.rect(self.registry.currentWindow, [116, 125, 140], [110, 393, 115, 35])
+            self.minusFps = self.registry.currentWindow.blit(self.font6.render("-", True, (255, 255, 255)), (120, 395))
+            self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
+            self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (255, 107, 129)), (152, 395))
+        elif self.registry.settings["FpsLimit"]["Value"] >= 110:
+            self.fpsRect = pygame.draw.rect(self.registry.currentWindow, [116, 125, 140], [110, 393, 115, 35])
+            self.minusFps = self.registry.currentWindow.blit(self.font6.render("-", True, (255, 255, 255)), (120, 395))
+            self.plusFps = self.registry.currentWindow.blit(self.font6.render("+", True, (255, 255, 255)), (200, 395))
+            self.limitInt = self.registry.currentWindow.blit(self.font6.render(str(self.registry.settings["FpsLimit"]["Value"]), True, (29, 209, 161)), (152, 395))

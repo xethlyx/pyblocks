@@ -19,7 +19,7 @@ class Registry():
             },
             "FpsLimit": {
                 "DisplayName": "FPS Limit",
-                "Value": 10
+                "Value": 60
             }
         }
 
