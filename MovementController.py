@@ -12,6 +12,8 @@ class MovementController():
 
         self.transform = TMatrix()
 
+        print(pygame.mouse.get_rel())
+
         return(transform)
 
     def key_down(self, event):

@@ -80,6 +80,8 @@ while gameRegistry.Run == CEnum.GameState.Active:
 
         # Get User Input
         changedTransform = gameRegistry.currentController.getMovementSet()
+        
+        gameRegistry.currentCamera.transform *= changedTransform
 
         # TODO: Change TMatrix checking function and then compare both
         # if changedRotation != blankRotation:
