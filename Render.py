@@ -65,7 +65,7 @@ class Camera:
         self.registry.currentWindow.fill((0, 0, 0))
 
         for blockUuid in self.registry.currentScene.blocks:
-            print("found block")
+          #print("found block")
             for vertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
                 vertexPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0,
                                          self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0],
@@ -75,7 +75,7 @@ class Camera:
                 vertexPosition *= self.registry.currentScene.blocks[blockUuid].transform
                 vertexPosition = self.tmatrix_to_position(vertexPosition)
 
-                print("Drawing point at " + str(vertexPosition))
+                # print("Drawing point at " + str(vertexPosition))
 
                 if vertexPosition:
                     pygame.draw.circle(self.registry.currentWindow, (50, 50, 50), vertexPosition, 2)

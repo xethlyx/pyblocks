@@ -12,7 +12,7 @@ class MovementController():
 
         self.transform = TMatrix()
 
-        print(pygame.mouse.get_rel())
+       #print(pygame.mouse.get_rel())
 
         return(transform)
 
