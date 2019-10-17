@@ -74,13 +74,13 @@ class Camera:
         self.registry.currentWindow.fill((0, 0, 0))
 
         for blockUuid in self.registry.currentScene.blocks:
-            print("found block")
+          #print("found block")
             for vertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
                 vertexPosition = get_vertex_screen_pos(self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0],
                                                        self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1],
                                                        self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][2])
 
-                print("Drawing point at " + str(vertexPosition))
+                # print("Drawing point at " + str(vertexPosition))
 
                 if vertexPosition:
                     pygame.draw.circle(self.registry.currentWindow, (50, 50, 50), vertexPosition, 2)
