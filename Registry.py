@@ -24,6 +24,14 @@ class Registry():
             "Sounds": {
                 "DisplayName": "Sounds",
                 "Value": True
+            },
+            "DebugMode": {
+                "DisplayName": "Debug Mode",
+                "Value": False
+            },
+            "CommandCon": {
+                "DisplayName": "Command Console",
+                "Value": False
             }
         }
 

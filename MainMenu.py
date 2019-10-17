@@ -1,6 +1,7 @@
 import pygame
 
 import Enum as CEnum
+from debug import draw_debug
 
 RED = (255, 0, 0)
 
@@ -21,6 +22,8 @@ class MainMenu():
         self.firstSettings = False
 
     def draw_main_menu(self):
+        draw_debug(self.registry)
+        print("debug")
         self.registry.currentWindow.fill((0, 0, 0))
         back = pygame.image.load('test.png')
         back = pygame.transform.scale(back, (1520, 800))
@@ -48,7 +51,6 @@ class MainMenu():
         self.registry.currentWindow.blit(self.font.render('Single Player', True, (255, 255, 255)), (68, 568))
 
     def render(self):
-        print(pygame.mouse.get_rel())
         if self.firstLoad:
             self.firstLoad = False
             self.draw_main_menu()
@@ -88,6 +90,16 @@ class MainMenu():
                 self.switchImage3 = pygame.image.load('Switch1.png')
             else:
                 self.switchImage3 = pygame.image.load('Switch0.png')
+
+            if self.registry.settings["DebugMode"]["Value"]:
+                self.switchImage4 = pygame.image.load('Switch1.png')
+            else:
+                self.switchImage4 = pygame.image.load('Switch0.png')
+
+            if self.registry.settings["CommandCon"]["Value"]:
+                self.switchImage5 = pygame.image.load('Switch1.png')
+            else:
+                self.switchImage5 = pygame.image.load('Switch0.png')
 
             if not self.firstSettings:
 
@@ -138,6 +150,22 @@ class MainMenu():
                 else:
                     self.switchImage3 = pygame.image.load('Switch0.png')
                 self.switchImage3 = self.registry.currentWindow.blit(self.switchImage3, (130, 455))
+            
+            elif self.switch4.collidepoint(mouse_pos):
+                self.registry.settings["DebugMode"]["Value"] = not self.registry.settings["DebugMode"]["Value"]
+                if self.registry.settings["DebugMode"]["Value"]:
+                    self.switchImage4 = pygame.image.load('Switch1.png')
+                else:
+                    self.switchImage4 = pygame.image.load('Switch0.png')
+                self.switchImage4 = self.registry.currentWindow.blit(self.switchImage4, (130, 455))
+            
+            elif self.switch5.collidepoint(mouse_pos):
+                self.registry.settings["CommandCon"]["Value"] = not self.registry.settings["CommandCon"]["Value"]
+                if self.registry.settings["CommandCon"]["Value"]:
+                    self.switchImage5 = pygame.image.load('Switch1.png')
+                else:
+                    self.switchImage5 = pygame.image.load('Switch0.png')
+                # self.switchImage5 = self.registry.currentWindow.blit(self.switchImage5, (130, 455))
 
             elif self.plusFps.collidepoint(mouse_pos):
                 self.registry.settings["FpsLimit"]["Value"] += 10
@@ -182,7 +210,7 @@ class MainMenu():
         self.generalButton = self.registry.currentWindow.blit(self.buttonFont.render('General', True, (83, 82, 237)), (130, 190))
 
         # Advanced Button
-        self.renderButton = self.registry.currentWindow.blit(self.buttonFont.render('Render', True, (45, 52, 54)), (464, 190))
+        self.renderButton = self.registry.currentWindow.blit(self.buttonFont.render('Advanced', True, (45, 52, 54)), (430, 190))
 
         # FPS Counter
         self.font6 = pygame.font.Font('upheavtt.ttf', 30)
@@ -223,7 +251,15 @@ class MainMenu():
         self.generalButton = self.registry.currentWindow.blit(self.buttonFont.render('General', True, (45, 52, 54)), (130, 190))
 
         # Advanced Button
-        self.renderButton = self.registry.currentWindow.blit(self.buttonFont.render('Render', True, (83, 82, 237)), (464, 190)) 
+        self.renderButton = self.registry.currentWindow.blit(self.buttonFont.render('Advanced', True, (83, 82, 237)), (430, 190))
+
+        # Debug Mode
+        self.debugLabel = self.registry.currentWindow.blit(self.font6.render('Debug Mode', True, (45, 52, 54)), (230, 265))
+        self.switch4 = self.registry.currentWindow.blit(self.switchImage4, (130, 260))
+
+        # Command Console
+        self.comLabel = self.registry.currentWindow.blit(self.font6.render(self.registry.settings["CommandCon"]["DisplayName"], True, (45, 52, 54)), (230, 330))
+        self.switch5 = self.registry.currentWindow.blit(self.switchImage5, (130, 325))
 
     def fps_color(self):
         # If greater than 110fps, green, if under 30fps, red.
