@@ -35,10 +35,11 @@ class Camera:
         """
 
         canvasWidth, canvasHeight = self.registry.currentWindow.get_size()
+        frameSize = max(canvasHeight, canvasHeight)
 
         localTransform = transform * self.transform.get_matrix_inverse()
-        localTransform *= 4
-        localTransform.set_scale(self.blockScale)
+        localTransform *= self.blockScale
+        localTransform.set_scale(1)
 
         if localTransform.get_value("zp") > 0:
             zScreen = -localTransform.get_value("zp")
@@ -53,31 +54,44 @@ class Camera:
 
             # Normalize screen pos
 
-            screenPosition.set_value("xp", (screenPosition.get_value("xp") + canvasWidth / 2) / canvasWidth)
-            screenPosition.set_value("yp", (screenPosition.get_value("yp") + canvasWidth / 2) / canvasWidth)
+            screenPosition.set_value("xp", (screenPosition.get_value("xp") + frameSize / 2) / frameSize)
+            screenPosition.set_value("yp", (screenPosition.get_value("yp") + frameSize / 2) / frameSize)
 
-            return([abs(int(screenPosition.get_value("xp") * canvasWidth)), abs(int(screenPosition.get_value("yp") * canvasHeight))])
+            return([abs(int(screenPosition.get_value("xp") * frameSize)), abs(int(screenPosition.get_value("yp") * frameSize))])
 
         return False
 
     def render3d(self):
+        def get_vertex_screen_pos(x, y, z):
+            vertexPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, x, y, z)
+
+            vertexPosition *= self.registry.currentScene.blocks[blockUuid].transform
+            vertexPosition = self.tmatrix_to_position(vertexPosition)
+
+            return vertexPosition
+
         # Reset scene
         self.registry.currentWindow.fill((0, 0, 0))
 
         for blockUuid in self.registry.currentScene.blocks:
           #print("found block")
             for vertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
-                vertexPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0],
-                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1],
-                                         self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][2])
-
-                vertexPosition *= self.registry.currentScene.blocks[blockUuid].transform
-                vertexPosition = self.tmatrix_to_position(vertexPosition)
+                vertexPosition = get_vertex_screen_pos(self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0],
+                                                       self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1],
+                                                       self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][2])
 
                 # print("Drawing point at " + str(vertexPosition))
 
                 if vertexPosition:
                     pygame.draw.circle(self.registry.currentWindow, (50, 50, 50), vertexPosition, 2)
+
+                    # Draw secondary vertex pos with line
+                    for secondaryVertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
+                        secondaryVertexPosition = get_vertex_screen_pos(self.registry.currentScene.blocks[blockUuid].obj["Vertices"][secondaryVertexNumber][0],
+                                                                        self.registry.currentScene.blocks[blockUuid].obj["Vertices"][secondaryVertexNumber][1],
+                                                                        self.registry.currentScene.blocks[blockUuid].obj["Vertices"][secondaryVertexNumber][2])
+
+                        if secondaryVertexPosition:
+                            pygame.draw.line(self.registry.currentWindow, (255, 255, 255), vertexPosition, secondaryVertexPosition)
 
         self.tmatrix_to_position(TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 100, 200))
