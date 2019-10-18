@@ -68,6 +68,7 @@ while gameRegistry.Run == CEnum.GameState.Active:
     deltaTime = gameRegistry.LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
 
+
     if gameRegistry.GameScene == CEnum.GameScene.MainMenu:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -76,11 +77,17 @@ while gameRegistry.Run == CEnum.GameState.Active:
                 gameRegistry.currentMainMenu.mouse_clicked(event)
         gameRegistry.currentMainMenu.render()
     elif gameRegistry.GameScene == CEnum.GameScene.Render3D:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameRegistry.Run = CEnum.GameState.Dead
+
+        print(pygame.mouse.get_rel())
+
         gameRegistry.currentController.key_down(pygame.key.get_pressed())
 
         # Get User Input
         changedTransform = gameRegistry.currentController.getMovementSet()
-        
+
         gameRegistry.currentCamera.transform *= changedTransform
 
         # TODO: Change TMatrix checking function and then compare both
