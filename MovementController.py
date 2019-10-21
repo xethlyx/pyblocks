@@ -10,9 +10,13 @@ class MovementController():
     def getMovementSet(self):
         transform = self.transform
 
-        self.transform = TMatrix()
+        x, y = pygame.mouse.get_rel()
 
-       #print(pygame.mouse.get_rel())
+        transform = TMatrix(
+            1, 0, 0,
+            0, 0, 1,
+            0, -1, 0
+        )
 
         return(transform)
 

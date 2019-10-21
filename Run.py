@@ -81,14 +81,14 @@ while gameRegistry.Run == CEnum.GameState.Active:
             if event.type == pygame.QUIT:
                 gameRegistry.Run = CEnum.GameState.Dead
 
-        print(pygame.mouse.get_rel())
-
         gameRegistry.currentController.key_down(pygame.key.get_pressed())
 
         # Get User Input
         changedTransform = gameRegistry.currentController.getMovementSet()
 
-        gameRegistry.currentCamera.transform *= changedTransform
+        print(changedTransform)
+
+        gameRegistry.currentCamera.transform = gameRegistry.currentCamera.transform * changedTransform
 
         # TODO: Change TMatrix checking function and then compare both
         # if changedRotation != blankRotation:
@@ -99,6 +99,8 @@ while gameRegistry.Run == CEnum.GameState.Active:
 
         # Draw the scene
         gameRegistry.currentCamera.render3d()
+
+
 
         pygame.time.delay(int(1000/60))
     pygame.display.update()

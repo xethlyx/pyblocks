@@ -12,3 +12,11 @@ Oct 11
 - COLORS
     - Green = rgb(46, 213, 115)
     - Purple = rgb(83, 82, 237)
+
+
+ROTATE 90 DEG
+ORIGINALMATRIX * (TMatrix(
+    1, 0, 0,
+    0, 0, -1,
+    0, 1, 0
+) * 0.5)
