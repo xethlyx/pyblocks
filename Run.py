@@ -68,7 +68,6 @@ while gameRegistry.Run == CEnum.GameState.Active:
     deltaTime = gameRegistry.LastRun - datetime.datetime.now()
     LastRun = datetime.datetime.now()
 
-
     if gameRegistry.GameScene == CEnum.GameScene.MainMenu:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -86,9 +85,9 @@ while gameRegistry.Run == CEnum.GameState.Active:
         # Get User Input
         changedTransform = gameRegistry.currentController.getMovementSet()
 
-        print(changedTransform)
+        # gameRegistry.currentCamera.transform = gameRegistry.currentCamera.transform * changedTransform
+        print(gameRegistry.currentCamera.transform)
 
-        gameRegistry.currentCamera.transform = gameRegistry.currentCamera.transform * changedTransform
 
         # TODO: Change TMatrix checking function and then compare both
         # if changedRotation != blankRotation:
@@ -99,8 +98,6 @@ while gameRegistry.Run == CEnum.GameState.Active:
 
         # Draw the scene
         gameRegistry.currentCamera.render3d()
-
-
 
         pygame.time.delay(int(1000/60))
     pygame.display.update()
