@@ -20,7 +20,7 @@ class Camera:
         self.fov = fov
         self.registry = registry
 
-        self.blockScale = 200
+        self.blockScale = 20
 
         if isinstance(transform, TMatrix):
             self.transform = transform
@@ -38,12 +38,15 @@ class Camera:
         frameSize = max(canvasHeight, canvasHeight)
 
         localTransform = transform * self.transform.get_matrix_inverse()
+        localTransform *= self.blockScale
         localTransform.set_scale(1)
 
         if localTransform.get_value("zp") > 0:
+            zScreen = -localTransform.get_value("zp")
+
             screenPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                     localTransform.get_value("xp") / -localTransform.get_value("zp"),
-                                     localTransform.get_value("yp") / -localTransform.get_value("zp"),
+                                     localTransform.get_value("xp") * zScreen,
+                                     localTransform.get_value("yp") * zScreen,
                                      0)
 
             if abs((screenPosition.get_value("xp") > canvasWidth) or (screenPosition.get_value("yp") > canvasHeight)):
@@ -53,11 +56,6 @@ class Camera:
 
             screenPosition.set_value("xp", (screenPosition.get_value("xp") + frameSize / 2) / frameSize)
             screenPosition.set_value("yp", (screenPosition.get_value("yp") + frameSize / 2) / frameSize)
-
-            # Expand coordinates
-
-            screenPosition.set_value("xp", screenPosition.get_value("xp") * self.blockScale - 1 / self.blockScale)
-            screenPosition.set_value("yp", screenPosition.get_value("yp") * self.blockScale - 1 / self.blockScale)
 
             return([abs(int(screenPosition.get_value("xp") * frameSize)), abs(int(screenPosition.get_value("yp") * frameSize))])
 
@@ -76,7 +74,7 @@ class Camera:
         self.registry.currentWindow.fill((0, 0, 0))
 
         for blockUuid in self.registry.currentScene.blocks:
-            # print("found block")
+          #print("found block")
             for vertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
                 vertexPosition = get_vertex_screen_pos(self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][0],
                                                        self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1],
@@ -86,8 +84,6 @@ class Camera:
 
                 if vertexPosition:
                     pygame.draw.circle(self.registry.currentWindow, (50, 50, 50), vertexPosition, 2)
-
-                    print(vertexPosition)
 
                     # Draw secondary vertex pos with line
                     for secondaryVertexNumber in self.registry.currentScene.blocks[blockUuid].obj["Vertices"]:
