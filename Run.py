@@ -86,7 +86,7 @@ while gameRegistry.Run == CEnum.GameState.Active:
         # Get User Input
         changedTransform = gameRegistry.currentController.getMovementSet()
 
-        print(changedTransform)
+        # print(changedTransform)
 
         gameRegistry.currentCamera.transform = gameRegistry.currentCamera.transform * changedTransform
 
