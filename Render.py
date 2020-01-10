@@ -35,10 +35,8 @@ class Camera:
         """
 
         canvasWidth, canvasHeight = self.registry.currentWindow.get_size()
-        frameSize = max(canvasHeight, canvasHeight)
 
         localTransform = transform * self.transform.get_matrix_inverse()
-        localTransform *= self.blockScale
         localTransform.set_scale(1)
 
         if localTransform.get_value("zp") > 0:
@@ -49,15 +47,16 @@ class Camera:
                                      localTransform.get_value("yp") * zScreen,
                                      0)
 
-            if abs((screenPosition.get_value("xp") > canvasWidth) or (screenPosition.get_value("yp") > canvasHeight)):
-                return False
+            #TODO: Proper clipping
+            #if abs((screenPosition.get_value("xp") > canvasWidth) or (screenPosition.get_value("yp") > canvasHeight)):
+            #    return False
 
             # Normalize screen pos
 
-            screenPosition.set_value("xp", (screenPosition.get_value("xp") + frameSize / 2) / frameSize)
-            screenPosition.set_value("yp", (screenPosition.get_value("yp") + frameSize / 2) / frameSize)
-
-            return([abs(int(screenPosition.get_value("xp") * frameSize)), abs(int(screenPosition.get_value("yp") * frameSize))])
+            # screenPosition.set_value("xp", (screenPosition.get_value("xp") + frameSize / 2) / frameSize)
+            # screenPosition.set_value("yp", (screenPosition.get_value("yp") + frameSize / 2) / frameSize)
+            screenPosition *= self.blockScale
+            return([int(screenPosition.get_value("xp") + canvasWidth / 2), int(screenPosition.get_value("yp") + canvasHeight / 2)])
 
         return False
 

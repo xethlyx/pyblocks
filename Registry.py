@@ -32,6 +32,10 @@ class Registry():
             "CommandCon": {
                 "DisplayName": "Command Console",
                 "Value": False
+            },
+            "MouseSpeed": {
+                "DisplayName": "Mouse Speed",
+                "Value": 0.1
             }
         }
 

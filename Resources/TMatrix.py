@@ -117,6 +117,12 @@ class TMatrix:
             (self.get_value("zp") - other.get_value("zp"))**2
         ))
 
+    def to_local(self, other):
+        localTransform = other * self.get_matrix_inverse()
+        localTransform.set_scale(1)
+
+        return localTransform
+
     # Not my code below this line, taken from https://stackoverflow.com/a/39881366
 
     def transpose_matrix(self, matrix=None):

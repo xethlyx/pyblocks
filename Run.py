@@ -42,7 +42,7 @@ pygame.display.set_caption("Pycraft")
 gameRegistry = Registry()
 
 gameRegistry.currentCamera = Camera(90, TMatrix(), gameRegistry)
-gameRegistry.currentController = MovementController()
+gameRegistry.currentController = MovementController(gameRegistry)
 gameRegistry.currentMainMenu = MainMenu(gameRegistry)
 gameRegistry.currentScene = Scene()
 
@@ -81,27 +81,19 @@ while gameRegistry.Run == CEnum.GameState.Active:
             if event.type == pygame.QUIT:
                 gameRegistry.Run = CEnum.GameState.Dead
 
-        gameRegistry.currentController.key_down(pygame.key.get_pressed())
-
+        gameRegistry.currentCamera.transform *= TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        
         # Get User Input
+        gameRegistry.currentController.key_down(pygame.key.get_pressed())
         changedTransform = gameRegistry.currentController.getMovementSet()
 
-        # print(changedTransform)
-
-        gameRegistry.currentCamera.transform = gameRegistry.currentCamera.transform * changedTransform
-
-        # TODO: Change TMatrix checking function and then compare both
-        # if changedRotation != blankRotation:
-        #     gameRegistry.currentCamera.Rotation = gameRegistry.currentCamera.Rotation * changedRotation
-
-        # if changedPosition != blankPosition:
-        #     gameRegistry.currentCamera.Position = gameRegistry.currentCamera.Position + changedPosition
+        gameRegistry.currentCamera.transform *= changedTransform
 
         # Draw the scene
         gameRegistry.currentCamera.render3d()
 
 
 
-        pygame.time.delay(int(1000/60))
+        #pygame.time.delay(1)
     pygame.display.update()
 pygame.quit()
