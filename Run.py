@@ -85,6 +85,9 @@ while gameRegistry.Run == CEnum.GameState.Active:
         
         # Get User Input
         gameRegistry.currentController.key_down(pygame.key.get_pressed())
+        x, y = pygame.mouse.get_rel()
+        gameRegistry.currentController.on_move(x, y)
+
         changedTransform = gameRegistry.currentController.getMovementSet()
 
         gameRegistry.currentCamera.transform *= changedTransform

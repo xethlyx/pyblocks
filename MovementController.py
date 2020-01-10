@@ -13,16 +13,6 @@ class MovementController():
         transform = self.transform
         #print(pygame.mouse.get_rel())
 
-        x, y = pygame.mouse.get_rel()
-        
-
-        #print(x, y * -1)
-
-        #transform = TMatrix(
-        #    1, 0, 0,
-        #    0, 0, -1,
-        #    0, 1, 0
-        #) 
         oldTransform = self.transform
         self.transform = TMatrix()
         return(transform)
@@ -52,17 +42,34 @@ class MovementController():
             self.transform *= TransformMatrix
 
     def on_move(self, x, y):
-        x = self.registry.settings["MouseSpeed"]["Value"]
+        x *= self.registry.settings["MouseSpeed"]["Value"]
+        y *= self.registry.settings["MouseSpeed"]["Value"]
 
-        TransformMatrix = TMatrix()
-        TransformMatrix.matrix = [
-            [1, 0, 0, 0],
-            [0, math.cos(math.radians(x)), math.sin(math.radians(x)), 0],
-            [0, -math.sin(math.radians(x)), math.cos(math.radians(x)), 0],
+        #TransformMatrixX = TMatrix()
+        #TransformMatrixX.matrix = [
+        #    [math.cos(math.radians(x)), -math.sin(math.radians(x)), 0, 0],
+        #    [math.sin(math.radians(x)), math.cos(math.radians(x)), 0, 0],
+        #    [0, 0, 1, 0],
+        #    [0, 0, 0, 1]
+        #]
+
+        TransformMatrixX = TMatrix()
+        TransformMatrixX.matrix = [
+            [math.cos(math.radians(x)), 0, -math.sin(math.radians(x)), 0],
+            [0, 1, 0, 0],
+            [math.sin(math.radians(x)), 0, math.cos(math.radians(x)), 0],
             [0, 0, 0, 1]
         ]
 
-        self.transform *= TransformMatrix
+        TransformMatrixY = TMatrix()
+        TransformMatrixY.matrix = [
+            [1, 0, 0, 0],
+            [0, math.cos(math.radians(y)), math.sin(math.radians(y)), 0],
+            [0, -math.sin(math.radians(y)), math.cos(math.radians(y)), 0],
+            [0, 0, 0, 1]
+        ]
+
+        self.transform *= TransformMatrixX * TransformMatrixY
 
     def on_click(self, x, y, button, pressed):
         print("Mouse clicked")
