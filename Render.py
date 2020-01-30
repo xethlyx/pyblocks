@@ -1,6 +1,7 @@
 """A .py file containing assets required for 3D rendering the scene"""
 
 import pygame
+import math
 
 from Resources.TMatrix import TMatrix
 
@@ -26,6 +27,19 @@ class Camera:
             self.transform = transform
         else:
             raise Exception("Transform must be of type TMatrix!")
+
+    def generate_projection_matrix(self, nearPlane, farPlane, aspectRatio):
+        returnMatrix = TMatrix();
+
+        # Probably very inefficient
+        returnMatrix.matrix = [
+            [aspectRatio * math.radians(self.fov), 0, 0, 0],
+            [0, math.radians(self.fov), 0, 0],
+            [0, 0, farPlane / (farPlane - nearPlane), 0],
+            [0, 0, 1, 0]
+        ]
+
+        return returnMatrix
 
     def tmatrix_to_position(self, transform):
         """Transforms a TMatrix into screen coordinates.

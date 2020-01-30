@@ -31,6 +31,7 @@ class MovementController():
         if event[pygame.K_d]:
             self.transform *= TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.1, 0, 0)
         if event[pygame.K_f]:
+            # Debug rotation
             TransformMatrix = TMatrix()
             TransformMatrix.matrix = [
                 [1, 0, 0, 0],
@@ -42,7 +43,7 @@ class MovementController():
             self.transform *= TransformMatrix
 
     def on_move(self, x, y):
-        x *= self.registry.settings["MouseSpeed"]["Value"]
+        x *= -self.registry.settings["MouseSpeed"]["Value"]
         y *= self.registry.settings["MouseSpeed"]["Value"]
 
         #TransformMatrixX = TMatrix()
