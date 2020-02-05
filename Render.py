@@ -41,6 +41,12 @@ class Camera:
 
         return returnMatrix
 
+    def flatten_tmatrix(self, transform):
+        # TODO: Implement additional functionality for specific settings
+        # Will use built in TMatrix functionality in order to move
+        print(self.generate_projection_matrix(1, 100, math.radians(90)))
+        return transform * self.generate_projection_matrix(1, 100, math.radians(90))
+
     def tmatrix_to_position(self, transform):
         """Transforms a TMatrix into screen coordinates.
 
@@ -79,9 +85,9 @@ class Camera:
             vertexPosition = TMatrix(0, 0, 0, 0, 0, 0, 0, 0, 0, x, y, z)
 
             vertexPosition *= self.registry.currentScene.blocks[blockUuid].transform
-            vertexPosition = self.tmatrix_to_position(vertexPosition)
-
-            return vertexPosition
+            #vertexPosition = self.tmatrix_to_position(vertexPosition)
+            print()
+            vertexPosition = self.flatten_tmatrix(vertexPosition)
 
         # Reset scene
         self.registry.currentWindow.fill((0, 0, 0))
@@ -93,7 +99,7 @@ class Camera:
                                                        self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][1],
                                                        self.registry.currentScene.blocks[blockUuid].obj["Vertices"][vertexNumber][2])
 
-                # print("Drawing point at " + str(vertexPosition))
+                print("Drawing point at " + str(vertexPosition))
 
                 if vertexPosition:
                     pygame.draw.circle(self.registry.currentWindow, (50, 50, 50), vertexPosition, 2)
