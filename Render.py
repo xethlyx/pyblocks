@@ -44,8 +44,8 @@ class Camera:
     def flatten_tmatrix(self, transform):
         # TODO: Implement additional functionality for specific settings
         # Will use built in TMatrix functionality in order to move
-        print(self.generate_projection_matrix(1, 100, math.radians(90)))
-        return transform * self.generate_projection_matrix(1, 100, math.radians(90))
+        print(transform * self.generate_projection_matrix(1, 100, math.radians(90)))
+        return transform * self.generate_projection_matrix(0, 100, math.radians(90))
 
     def tmatrix_to_position(self, transform):
         """Transforms a TMatrix into screen coordinates.
@@ -86,8 +86,9 @@ class Camera:
 
             vertexPosition *= self.registry.currentScene.blocks[blockUuid].transform
             #vertexPosition = self.tmatrix_to_position(vertexPosition)
-            print()
             vertexPosition = self.flatten_tmatrix(vertexPosition)
+
+            return(int(vertexPosition.get_value("xp")), int(vertexPosition.get_value("yp")))
 
         # Reset scene
         self.registry.currentWindow.fill((0, 0, 0))
